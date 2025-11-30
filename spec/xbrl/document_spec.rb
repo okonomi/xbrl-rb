@@ -1,41 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe XBRL::Document do
-  describe ".parse" do
-    it "parses a simple XBRL instance document" do
-      doc = described_class.parse(fixture_path("simple_instance.xml"))
-
-      expect(doc).to be_a(XBRL::Document)
-      expect(doc.contexts).not_to be_empty
-      expect(doc.units).not_to be_empty
-    end
-
-    it "raises an error for non-existent files" do
-      expect do
-        described_class.parse("nonexistent.xml")
-      end.to raise_error(XBRL::InvalidDocumentError, /File not found/)
-    end
-  end
-
-  describe ".parse_string" do
-    it "parses XBRL from a string" do
-      xml = load_fixture("simple_instance.xml")
-      doc = described_class.parse_string(xml)
-
-      expect(doc).to be_a(XBRL::Document)
-      expect(doc.contexts).not_to be_empty
-      expect(doc.units).not_to be_empty
-    end
-
-    it "raises an error for invalid XML" do
-      expect do
-        described_class.parse_string("<invalid>")
-      end.to raise_error(XBRL::ParseError)
-    end
-  end
-
   describe "#contexts" do
-    let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+    let(:doc) { XBRL.parse(fixture_path("simple_instance.xml")) }
 
     it "returns a ContextCollection" do
       expect(doc.contexts).to be_a(XBRL::Collections::ContextCollection)
@@ -72,7 +39,7 @@ RSpec.describe XBRL::Document do
   end
 
   describe "#units" do
-    let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+    let(:doc) { XBRL.parse(fixture_path("simple_instance.xml")) }
 
     it "returns a UnitCollection" do
       expect(doc.units).to be_a(XBRL::Collections::UnitCollection)
@@ -110,7 +77,7 @@ RSpec.describe XBRL::Document do
   end
 
   describe "#find_context" do
-    let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+    let(:doc) { XBRL.parse(fixture_path("simple_instance.xml")) }
 
     it "finds a context by ID" do
       context = doc.find_context("CurrentYearDuration")
@@ -125,7 +92,7 @@ RSpec.describe XBRL::Document do
   end
 
   describe "#find_unit" do
-    let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+    let(:doc) { XBRL.parse(fixture_path("simple_instance.xml")) }
 
     it "finds a unit by ID" do
       unit = doc.find_unit("JPY")
@@ -140,7 +107,7 @@ RSpec.describe XBRL::Document do
   end
 
   describe "#facts" do
-    let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+    let(:doc) { XBRL.parse(fixture_path("simple_instance.xml")) }
 
     it "returns a FactCollection" do
       expect(doc.facts).to be_a(XBRL::Collections::FactCollection)

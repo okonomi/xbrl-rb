@@ -43,11 +43,11 @@ gem install xbrl-rb
 require "xbrl"
 
 # Parse an XBRL document from a file
-doc = XBRL::Document.parse("path/to/instance.xml")
+doc = XBRL.parse("path/to/instance.xml")
 
 # Or parse from a string
 xml_string = File.read("path/to/instance.xml")
-doc = XBRL::Document.parse_string(xml_string)
+doc = XBRL.parse_string(xml_string)
 ```
 
 ### Working with Contexts
@@ -165,7 +165,7 @@ puts footnote.to_s
 ### Example with EDINET Data
 
 ```ruby
-doc = XBRL::Document.parse("edinet_document.xml")
+doc = XBRL.parse("edinet_document.xml")
 
 # Find current year duration context
 current_year = doc.contexts.duration.find { |ctx| ctx.id.include?("CurrentYear") }
