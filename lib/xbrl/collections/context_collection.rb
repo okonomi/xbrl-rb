@@ -43,6 +43,31 @@ module Xbrl
       def group_by_entity
         group_by(&:entity_id)
       end
+
+      # Get contexts with dimensions
+      # @return [Array<Xbrl::Models::Context>]
+      def with_dimensions
+        select(&:dimensions?)
+      end
+
+      # Get contexts without dimensions
+      # @return [Array<Xbrl::Models::Context>]
+      def without_dimensions
+        reject(&:dimensions?)
+      end
+
+      # Find contexts by dimension value
+      # @param dimension_name [String] Dimension name
+      # @param value [String, nil] Dimension value (nil returns all contexts with this dimension)
+      # @return [Array<Xbrl::Models::Context>]
+      def find_by_dimension(dimension_name, value = nil)
+        select do |context|
+          dim = context.dimension(dimension_name)
+          next false unless dim
+
+          value.nil? || dim.value == value
+        end
+      end
     end
   end
 end

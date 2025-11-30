@@ -133,6 +133,9 @@ module Xbrl
       period_data = parse_period(period)
       return nil unless period_data
 
+      # Parse dimensions from segment or scenario
+      dimensions = parse_dimensions(entity, context_node)
+
       Models::Context.new(
         id: id,
         entity_scheme: entity_scheme,
@@ -141,7 +144,7 @@ module Xbrl
         start_date: period_data[:start_date],
         end_date: period_data[:end_date],
         instant_date: period_data[:instant_date],
-        dimensions: {}
+        dimensions: dimensions
       )
     rescue StandardError => e
       warn "Failed to parse context: #{e.message}"
@@ -325,6 +328,76 @@ module Xbrl
     rescue StandardError => e
       warn "Failed to parse footnote: #{e.message}"
       nil
+    end
+
+    # Parse dimensions from entity segment or scenario
+    # @param entity [Ox::Element] Entity element
+    # @param context_node [Ox::Element] Context element
+    # @return [Hash{String => Models::Dimension}]
+    def parse_dimensions(entity, context_node)
+      dimensions = {}
+
+      # Parse dimensions from entity segment
+      segment = get_element(entity, "segment")
+      dimensions.merge!(parse_dimension_container(segment)) if segment
+
+      # Parse dimensions from scenario
+      scenario = get_element(context_node, "scenario")
+      dimensions.merge!(parse_dimension_container(scenario)) if scenario
+
+      dimensions
+    end
+
+    # Parse dimensions from a container element (segment or scenario)
+    # @param container [Ox::Element] Container element
+    # @return [Hash{String => Models::Dimension}]
+    def parse_dimension_container(container)
+      dimensions = {}
+
+      return dimensions unless container.respond_to?(:nodes)
+
+      container.nodes.each do |node|
+        next unless node.is_a?(Ox::Element)
+
+        element_name = Namespace.strip_namespace(node.name)
+
+        # Parse explicit dimension members
+        if element_name == "explicitMember"
+          dimension_name = node[:dimension]
+          next unless dimension_name
+
+          dimension_name = Namespace.strip_namespace(dimension_name)
+          value = extract_text(node)
+          namespace = Namespace.extract_prefix(node.name)
+
+          dimensions[dimension_name] = Models::Dimension.new(
+            name: dimension_name,
+            value: value,
+            type: :explicit,
+            namespace: namespace
+          )
+        # Parse typed dimension members
+        elsif element_name == "typedMember"
+          dimension_name = node[:dimension]
+          next unless dimension_name
+
+          dimension_name = Namespace.strip_namespace(dimension_name)
+          value = extract_text(node)
+          namespace = Namespace.extract_prefix(node.name)
+
+          dimensions[dimension_name] = Models::Dimension.new(
+            name: dimension_name,
+            value: value,
+            type: :typed,
+            namespace: namespace
+          )
+        end
+      end
+
+      dimensions
+    rescue StandardError => e
+      warn "Failed to parse dimensions: #{e.message}"
+      {}
     end
   end
 end

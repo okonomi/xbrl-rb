@@ -43,6 +43,37 @@ module Xbrl
         period_type == :instant
       end
 
+      # Check if context has dimensions
+      # @return [Boolean]
+      def dimensions?
+        !dimensions.empty?
+      end
+
+      # Get dimension by name
+      # @param name [String] Dimension name
+      # @return [Dimension, nil]
+      def dimension(name)
+        dimensions[name]
+      end
+
+      # Get all dimension names
+      # @return [Array<String>]
+      def dimension_names
+        dimensions.keys
+      end
+
+      # Get explicit dimensions only
+      # @return [Hash{String => Dimension}]
+      def explicit_dimensions
+        dimensions.select { |_name, dim| dim.explicit? }
+      end
+
+      # Get typed dimensions only
+      # @return [Hash{String => Dimension}]
+      def typed_dimensions
+        dimensions.select { |_name, dim| dim.typed? }
+      end
+
       private
 
       # Parse date string into Date object

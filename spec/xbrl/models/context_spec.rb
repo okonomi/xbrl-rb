@@ -75,4 +75,139 @@ RSpec.describe Xbrl::Models::Context do
       expect(context.duration?).to be false
     end
   end
+
+  describe "#dimensions?" do
+    it "returns true when context has dimensions" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        dimensions: { "Segment" => segment_dim }
+      )
+
+      expect(context.dimensions?).to be true
+    end
+
+    it "returns false when context has no dimensions" do
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant
+      )
+
+      expect(context.dimensions?).to be false
+    end
+  end
+
+  describe "#dimension" do
+    it "returns dimension by name" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        dimensions: { "Segment" => segment_dim }
+      )
+
+      expect(context.dimension("Segment")).to eq(segment_dim)
+    end
+
+    it "returns nil for non-existent dimension" do
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant
+      )
+
+      expect(context.dimension("Segment")).to be_nil
+    end
+  end
+
+  describe "#dimension_names" do
+    it "returns all dimension names" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+      region_dim = Xbrl::Models::Dimension.new(
+        name: "Region",
+        value: "Tokyo"
+      )
+
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        dimensions: { "Segment" => segment_dim, "Region" => region_dim }
+      )
+
+      expect(context.dimension_names).to contain_exactly("Segment", "Region")
+    end
+  end
+
+  describe "#explicit_dimensions" do
+    it "returns only explicit dimensions" do
+      explicit_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan",
+        type: :explicit
+      )
+      typed_dim = Xbrl::Models::Dimension.new(
+        name: "Date",
+        value: "2023-12-31",
+        type: :typed
+      )
+
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        dimensions: { "Segment" => explicit_dim, "Date" => typed_dim }
+      )
+
+      expect(context.explicit_dimensions.size).to eq(1)
+      expect(context.explicit_dimensions["Segment"]).to eq(explicit_dim)
+    end
+  end
+
+  describe "#typed_dimensions" do
+    it "returns only typed dimensions" do
+      explicit_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan",
+        type: :explicit
+      )
+      typed_dim = Xbrl::Models::Dimension.new(
+        name: "Date",
+        value: "2023-12-31",
+        type: :typed
+      )
+
+      context = described_class.new(
+        id: "ctx1",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        dimensions: { "Segment" => explicit_dim, "Date" => typed_dim }
+      )
+
+      expect(context.typed_dimensions.size).to eq(1)
+      expect(context.typed_dimensions["Date"]).to eq(typed_dim)
+    end
+  end
 end

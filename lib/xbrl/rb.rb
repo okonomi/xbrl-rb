@@ -12,6 +12,7 @@ require_relative "models/unit"
 require_relative "models/fact"
 require_relative "models/schema_ref"
 require_relative "models/footnote"
+require_relative "models/dimension"
 
 # Collections
 require_relative "collections/base_collection"

@@ -90,6 +90,100 @@ RSpec.describe Xbrl::Collections::ContextCollection do
     end
   end
 
+  describe "#with_dimensions" do
+    it "returns contexts with dimensions" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+
+      context_with_dim = Xbrl::Models::Context.new(
+        id: "ctx4",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        instant_date: "2023-12-31",
+        dimensions: { "Segment" => segment_dim }
+      )
+
+      collection_with_dims = described_class.new([context1, context_with_dim])
+      results = collection_with_dims.with_dimensions
+
+      expect(results.size).to eq(1)
+      expect(results.first).to eq(context_with_dim)
+    end
+  end
+
+  describe "#without_dimensions" do
+    it "returns contexts without dimensions" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+
+      context_with_dim = Xbrl::Models::Context.new(
+        id: "ctx4",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        instant_date: "2023-12-31",
+        dimensions: { "Segment" => segment_dim }
+      )
+
+      collection_with_dims = described_class.new([context1, context_with_dim])
+      results = collection_with_dims.without_dimensions
+
+      expect(results.size).to eq(1)
+      expect(results.first).to eq(context1)
+    end
+  end
+
+  describe "#find_by_dimension" do
+    it "finds contexts by dimension name and value" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+
+      context_with_dim = Xbrl::Models::Context.new(
+        id: "ctx4",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        instant_date: "2023-12-31",
+        dimensions: { "Segment" => segment_dim }
+      )
+
+      collection_with_dims = described_class.new([context1, context_with_dim])
+      results = collection_with_dims.find_by_dimension("Segment", "Japan")
+
+      expect(results.size).to eq(1)
+      expect(results.first).to eq(context_with_dim)
+    end
+
+    it "finds contexts by dimension name only" do
+      segment_dim = Xbrl::Models::Dimension.new(
+        name: "Segment",
+        value: "Japan"
+      )
+
+      context_with_dim = Xbrl::Models::Context.new(
+        id: "ctx4",
+        entity_scheme: "http://example.com",
+        entity_id: "E12345",
+        period_type: :instant,
+        instant_date: "2023-12-31",
+        dimensions: { "Segment" => segment_dim }
+      )
+
+      collection_with_dims = described_class.new([context1, context_with_dim])
+      results = collection_with_dims.find_by_dimension("Segment")
+
+      expect(results.size).to eq(1)
+      expect(results.first).to eq(context_with_dim)
+    end
+  end
+
   describe "Enumerable methods" do
     it "supports each" do
       count = 0

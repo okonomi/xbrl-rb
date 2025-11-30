@@ -9,6 +9,7 @@ A Ruby gem for parsing XBRL (eXtensible Business Reporting Language) instance do
 - Extract units (currencies, shares, pure numbers)
 - Extract facts with full attribute support
 - Parse schema references and footnotes
+- Full dimension support (explicit and typed)
 - Rich collection APIs with query methods
 - Simple, Ruby-idiomatic API
 - Support for Japanese EDINET/TDnet formats
@@ -72,6 +73,19 @@ context = doc.find_context("CurrentYearDuration")
 instant_contexts = doc.contexts.instant
 duration_contexts = doc.contexts.duration
 entity_contexts = doc.contexts.find_by_entity("E12345")
+
+# Working with dimensions
+contexts_with_dims = doc.contexts.with_dimensions
+segment_contexts = doc.contexts.find_by_dimension("Segment", "Japan")
+
+# Check if context has dimensions
+if context.dimensions?
+  puts "Dimensions:"
+  context.dimension_names.each do |dim_name|
+    dim = context.dimension(dim_name)
+    puts "  #{dim.qualified_name}: #{dim.value} (#{dim.type})"
+  end
+end
 ```
 
 ### Working with Units
@@ -169,7 +183,7 @@ puts "Total financial data points: #{financial_facts.size}"
 
 ## Current Status
 
-This gem is currently in development (v0.3.0) and supports:
+This gem is currently in development (v0.4.0) and supports:
 
 - ✅ Context parsing (duration and instant periods)
 - ✅ Unit parsing (simple units and ratios)
@@ -179,21 +193,24 @@ This gem is currently in development (v0.3.0) and supports:
 - ✅ Numeric vs text fact detection
 - ✅ Schema reference parsing
 - ✅ Footnote parsing
-- ⏳ Advanced dimension handling (coming in v0.4.0)
-- ⏳ EDINET-specific context structures (coming in v0.4.0)
+- ✅ Dimension support (explicit and typed dimensions)
+- ✅ Dimension parsing from segment and scenario
+- ✅ Context collection dimension filtering
 
 ## Roadmap
 
-### v0.4.0 - Enhanced Dimension Support
-- Advanced dimension handling
-- EDINET-specific context structures
-- Explicit vs typed dimensions
+### v0.5.0 - Label and Presentation Support
+- Label parsing from linkbase files
+- Presentation structure parsing
+- Calculation linkbase support
+- Multi-language label support
 
 ### v1.0.0 - Production Ready
 - Comprehensive EDINET format support
-- Performance optimizations
-- Full documentation
+- Performance optimizations for large documents
+- Full documentation and examples
 - Validation and error reporting
+- Formula and assertion support
 
 ## Requirements
 

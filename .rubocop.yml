@@ -12,13 +12,13 @@ Style/StringLiteralsInInterpolation:
 
 # Metrics - Relax for parser code
 Metrics/ClassLength:
-  Max: 230
+  Max: 280
 
 Metrics/MethodLength:
-  Max: 30
+  Max: 35
 
 Metrics/AbcSize:
-  Max: 25
+  Max: 30
 
 Metrics/CyclomaticComplexity:
   Max: 12
@@ -30,7 +30,8 @@ Metrics/ParameterLists:
   Max: 8
   CountKeywordArgs: false
 
-# Allow longer blocks in tests
+# Allow longer blocks in tests and parser
 Metrics/BlockLength:
+  Max: 30
   Exclude:
     - 'spec/**/*'
