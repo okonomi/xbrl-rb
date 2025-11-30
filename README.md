@@ -7,6 +7,9 @@ A Ruby gem for parsing XBRL (eXtensible Business Reporting Language) instance do
 - Parse XBRL instance documents (.xml/.xbrl)
 - Extract contexts (periods, entities, dimensions)
 - Extract units (currencies, shares, pure numbers)
+- Extract facts with full attribute support
+- Parse schema references and footnotes
+- Rich collection APIs with query methods
 - Simple, Ruby-idiomatic API
 - Support for Japanese EDINET/TDnet formats
 - Fast parsing with Ox
@@ -49,7 +52,7 @@ doc = Xbrl::Document.parse_string(xml_string)
 ### Working with Contexts
 
 ```ruby
-# Get all contexts
+# Get all contexts (returns a ContextCollection)
 doc.contexts.each do |context|
   puts "Context ID: #{context.id}"
   puts "Entity: #{context.entity_id}"
@@ -64,12 +67,17 @@ end
 
 # Find a specific context by ID
 context = doc.find_context("CurrentYearDuration")
+
+# Collection query methods
+instant_contexts = doc.contexts.instant
+duration_contexts = doc.contexts.duration
+entity_contexts = doc.contexts.find_by_entity("E12345")
 ```
 
 ### Working with Units
 
 ```ruby
-# Get all units
+# Get all units (returns a UnitCollection)
 doc.units.each do |unit|
   puts "Unit ID: #{unit.id}"
   puts "Measure: #{unit.measure}"
@@ -80,6 +88,11 @@ end
 # Find a specific unit by ID
 unit = doc.find_unit("JPY")
 puts "Currency: #{unit.currency?}"  # => true
+
+# Collection query methods
+currencies = doc.units.currencies
+share_units = doc.units.shares
+pure_units = doc.units.pure
 ```
 
 ### Working with Facts
@@ -110,13 +123,38 @@ grouped = doc.facts.group_by_name
 grouped["NetSales"].each { |fact| puts fact.value }
 ```
 
+### Working with Schema References
+
+```ruby
+# Get all schema references
+doc.schema_refs.each do |schema_ref|
+  puts "Schema: #{schema_ref.href}"
+  puts "Type: #{schema_ref.type}"
+end
+```
+
+### Working with Footnotes
+
+```ruby
+# Get all footnotes
+doc.footnotes.each do |footnote|
+  puts "Footnote ID: #{footnote.id}"
+  puts "Text: #{footnote.text}"
+  puts "Language: #{footnote.lang}"
+end
+
+# Find a specific footnote by ID
+footnote = doc.find_footnote("footnote1")
+puts footnote.to_s
+```
+
 ### Example with EDINET Data
 
 ```ruby
 doc = Xbrl::Document.parse("edinet_document.xml")
 
 # Find current year duration context
-current_year = doc.contexts.find { |ctx| ctx.id.include?("CurrentYear") && ctx.duration? }
+current_year = doc.contexts.duration.find { |ctx| ctx.id.include?("CurrentYear") }
 puts "Current fiscal year: #{current_year.start_date} to #{current_year.end_date}"
 
 # Get net sales for current year
@@ -131,28 +169,31 @@ puts "Total financial data points: #{financial_facts.size}"
 
 ## Current Status
 
-This gem is currently in development (v0.2.0) and supports:
+This gem is currently in development (v0.3.0) and supports:
 
 - ✅ Context parsing (duration and instant periods)
 - ✅ Unit parsing (simple units and ratios)
 - ✅ Fact parsing with full attribute support
-- ✅ Fact collections with query methods
+- ✅ Context, Unit, and Fact collections with query methods
 - ✅ Type conversions (to_i, to_f, to_s)
 - ✅ Numeric vs text fact detection
-- ⏳ Schema reference parsing (coming in v0.3.0)
-- ⏳ Footnote parsing (coming in v0.3.0)
+- ✅ Schema reference parsing
+- ✅ Footnote parsing
+- ⏳ Advanced dimension handling (coming in v0.4.0)
+- ⏳ EDINET-specific context structures (coming in v0.4.0)
 
 ## Roadmap
 
-### v0.3.0 - Complete Instance Document Support
-- Schema references
-- Footnotes
-- Dimension handling
+### v0.4.0 - Enhanced Dimension Support
+- Advanced dimension handling
+- EDINET-specific context structures
+- Explicit vs typed dimensions
 
 ### v1.0.0 - Production Ready
 - Comprehensive EDINET format support
 - Performance optimizations
 - Full documentation
+- Validation and error reporting
 
 ## Requirements
 

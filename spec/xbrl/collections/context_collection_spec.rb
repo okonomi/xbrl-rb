@@ -1,0 +1,104 @@
+# frozen_string_literal: true
+
+RSpec.describe Xbrl::Collections::ContextCollection do
+  let(:context1) do
+    Xbrl::Models::Context.new(
+      id: "ctx1",
+      entity_scheme: "http://example.com",
+      entity_id: "E12345",
+      period_type: :instant,
+      instant_date: "2023-12-31"
+    )
+  end
+
+  let(:context2) do
+    Xbrl::Models::Context.new(
+      id: "ctx2",
+      entity_scheme: "http://example.com",
+      entity_id: "E12345",
+      period_type: :duration,
+      start_date: "2023-01-01",
+      end_date: "2023-12-31"
+    )
+  end
+
+  let(:context3) do
+    Xbrl::Models::Context.new(
+      id: "ctx3",
+      entity_scheme: "http://example.com",
+      entity_id: "E67890",
+      period_type: :instant,
+      instant_date: "2023-12-31"
+    )
+  end
+
+  let(:collection) { described_class.new([context1, context2, context3]) }
+
+  describe "#find_by_id" do
+    it "finds context by ID" do
+      result = collection.find_by_id("ctx1")
+      expect(result).to eq(context1)
+    end
+
+    it "returns nil when no match" do
+      result = collection.find_by_id("nonexistent")
+      expect(result).to be_nil
+    end
+  end
+
+  describe "#instant" do
+    it "returns only instant contexts" do
+      results = collection.instant
+      expect(results.size).to eq(2)
+      expect(results).to all(be_instant)
+    end
+  end
+
+  describe "#duration" do
+    it "returns only duration contexts" do
+      results = collection.duration
+      expect(results.size).to eq(1)
+      expect(results).to all(be_duration)
+    end
+  end
+
+  describe "#find_by_entity" do
+    it "finds contexts by entity identifier" do
+      results = collection.find_by_entity("E12345")
+      expect(results.size).to eq(2)
+      expect(results).to include(context1, context2)
+    end
+
+    it "returns empty array when no match" do
+      results = collection.find_by_entity("nonexistent")
+      expect(results).to be_empty
+    end
+  end
+
+  describe "#entity_identifiers" do
+    it "returns unique entity identifiers" do
+      identifiers = collection.entity_identifiers
+      expect(identifiers).to contain_exactly("E12345", "E67890")
+    end
+  end
+
+  describe "#group_by_entity" do
+    it "groups contexts by entity identifier" do
+      grouped = collection.group_by_entity
+      expect(grouped["E12345"].size).to eq(2)
+      expect(grouped["E67890"].size).to eq(1)
+    end
+  end
+
+  describe "Enumerable methods" do
+    it "supports each" do
+      count = 0
+      collection.each { |_ctx| count += 1 }
+      expect(count).to eq(3)
+    end
+
+    it "supports size" do
+      expect(collection.size).to eq(3)
+    end
+  end
+end

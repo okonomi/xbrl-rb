@@ -19,12 +19,14 @@ module Xbrl
     end
 
     # Parse the XBRL document
-    # @return [Hash] Parsed data with :contexts, :units, and :facts keys
+    # @return [Hash] Parsed data with :contexts, :units, :facts, :schema_refs, and :footnotes keys
     def parse
       {
         contexts: parse_contexts,
         units: parse_units,
-        facts: parse_facts
+        facts: parse_facts,
+        schema_refs: parse_schema_refs,
+        footnotes: parse_footnotes
       }
     end
 
@@ -260,6 +262,68 @@ module Xbrl
       )
     rescue StandardError => e
       warn "Failed to parse fact: #{e.message}"
+      nil
+    end
+
+    # Parse all schema reference elements
+    # @return [Array<Models::SchemaRef>]
+    def parse_schema_refs
+      find_elements("schemaRef").map do |schema_ref_node|
+        parse_schema_ref(schema_ref_node)
+      end.compact
+    end
+
+    # Parse a single schema reference element
+    # @param schema_ref_node [Ox::Element] SchemaRef element
+    # @return [Models::SchemaRef, nil]
+    def parse_schema_ref(schema_ref_node)
+      href = schema_ref_node[:href]
+      return nil unless href
+
+      type = schema_ref_node[:type] || "simple"
+
+      Models::SchemaRef.new(
+        href: href,
+        type: type
+      )
+    rescue StandardError => e
+      warn "Failed to parse schema reference: #{e.message}"
+      nil
+    end
+
+    # Parse all footnote elements
+    # @return [Array<Models::Footnote>]
+    def parse_footnotes
+      footnotes = []
+      find_elements("footnoteLink").each do |footnote_link|
+        footnote_link.nodes.each do |child|
+          next unless child.is_a?(Ox::Element)
+          next unless Namespace.strip_namespace(child.name) == "footnote"
+
+          footnote = parse_footnote(child)
+          footnotes << footnote if footnote
+        end
+      end
+      footnotes
+    end
+
+    # Parse a single footnote element
+    # @param footnote_node [Ox::Element] Footnote element
+    # @return [Models::Footnote, nil]
+    def parse_footnote(footnote_node)
+      id = footnote_node[:id]
+      return nil unless id
+
+      text = extract_text(footnote_node)
+      lang = footnote_node[:"xml:lang"] || footnote_node[:lang]
+
+      Models::Footnote.new(
+        id: id,
+        text: text,
+        lang: lang
+      )
+    rescue StandardError => e
+      warn "Failed to parse footnote: #{e.message}"
       nil
     end
   end

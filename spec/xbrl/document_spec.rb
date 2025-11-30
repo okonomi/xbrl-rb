@@ -37,6 +37,10 @@ RSpec.describe Xbrl::Document do
   describe "#contexts" do
     let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
 
+    it "returns a ContextCollection" do
+      expect(doc.contexts).to be_a(Xbrl::Collections::ContextCollection)
+    end
+
     it "returns all contexts" do
       expect(doc.contexts.size).to eq(3)
     end
@@ -69,6 +73,10 @@ RSpec.describe Xbrl::Document do
 
   describe "#units" do
     let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+
+    it "returns a UnitCollection" do
+      expect(doc.units).to be_a(Xbrl::Collections::UnitCollection)
+    end
 
     it "returns all units" do
       expect(doc.units.size).to eq(3)
