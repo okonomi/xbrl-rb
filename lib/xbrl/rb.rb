@@ -9,6 +9,11 @@ require_relative "namespace"
 # Models
 require_relative "models/context"
 require_relative "models/unit"
+require_relative "models/fact"
+
+# Collections
+require_relative "collections/base_collection"
+require_relative "collections/fact_collection"
 
 # Parser and Document
 require_relative "parser"

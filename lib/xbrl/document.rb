@@ -3,7 +3,7 @@
 module Xbrl
   # Represents an XBRL instance document
   class Document
-    attr_reader :contexts, :units
+    attr_reader :contexts, :units, :facts
 
     # Parse an XBRL document from a file
     # @param file_path [String] Path to XBRL file
@@ -26,15 +26,18 @@ module Xbrl
 
       new(
         contexts: data[:contexts],
-        units: data[:units]
+        units: data[:units],
+        facts: data[:facts]
       )
     end
 
     # @param contexts [Array<Models::Context>] Contexts
     # @param units [Array<Models::Unit>] Units
-    def initialize(contexts:, units:)
+    # @param facts [Array<Models::Fact>] Facts
+    def initialize(contexts:, units:, facts: [])
       @contexts = contexts
       @units = units
+      @facts = Collections::FactCollection.new(facts)
 
       freeze
     end

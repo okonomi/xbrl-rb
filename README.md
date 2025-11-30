@@ -82,6 +82,34 @@ unit = doc.find_unit("JPY")
 puts "Currency: #{unit.currency?}"  # => true
 ```
 
+### Working with Facts
+
+```ruby
+# Get all facts
+doc.facts.each do |fact|
+  puts "#{fact.qualified_name}: #{fact.value}"
+end
+
+# Find facts by name
+net_sales = doc.facts.find_by_name("NetSales")
+net_sales.each do |fact|
+  puts "#{fact.context_ref}: #{fact.to_i}"
+end
+
+# Get numeric facts only
+numeric_facts = doc.facts.numeric
+numeric_facts.each do |fact|
+  puts "#{fact.name}: #{fact.to_i} #{fact.unit_ref}"
+end
+
+# Query facts by context
+current_year_facts = doc.facts.find_by_context("CurrentYearDuration")
+
+# Group facts by name
+grouped = doc.facts.group_by_name
+grouped["NetSales"].each { |fact| puts fact.value }
+```
+
 ### Example with EDINET Data
 
 ```ruby
@@ -91,28 +119,30 @@ doc = Xbrl::Document.parse("edinet_document.xml")
 current_year = doc.contexts.find { |ctx| ctx.id.include?("CurrentYear") && ctx.duration? }
 puts "Current fiscal year: #{current_year.start_date} to #{current_year.end_date}"
 
-# Find JPY unit
-jpy_unit = doc.find_unit("JPY")
-puts "Unit measure: #{jpy_unit.measure}"  # => "iso4217:JPY"
+# Get net sales for current year
+net_sales = doc.facts.find_by_name("NetSales")
+                      .find { |f| f.context_ref == current_year.id }
+puts "Net Sales: #{net_sales.to_i} JPY"
+
+# Get all financial facts
+financial_facts = doc.facts.numeric
+puts "Total financial data points: #{financial_facts.size}"
 ```
 
 ## Current Status
 
-This gem is currently in early development (v0.1.0) and supports:
+This gem is currently in development (v0.2.0) and supports:
 
 - ✅ Context parsing (duration and instant periods)
 - ✅ Unit parsing (simple units and ratios)
-- ✅ Basic XBRL instance document structure
-- ⏳ Fact parsing (coming in v0.2.0)
-- ⏳ Schema reference parsing
-- ⏳ Footnote parsing
+- ✅ Fact parsing with full attribute support
+- ✅ Fact collections with query methods
+- ✅ Type conversions (to_i, to_f, to_s)
+- ✅ Numeric vs text fact detection
+- ⏳ Schema reference parsing (coming in v0.3.0)
+- ⏳ Footnote parsing (coming in v0.3.0)
 
 ## Roadmap
-
-### v0.2.0 - Fact Support
-- Parse XBRL facts
-- Fact collections with query methods
-- Type conversions (numeric, text, dates)
 
 ### v0.3.0 - Complete Instance Document Support
 - Schema references

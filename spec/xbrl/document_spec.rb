@@ -130,4 +130,48 @@ RSpec.describe Xbrl::Document do
       expect(unit).to be_nil
     end
   end
+
+  describe "#facts" do
+    let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
+
+    it "returns a FactCollection" do
+      expect(doc.facts).to be_a(Xbrl::Collections::FactCollection)
+    end
+
+    it "parses all facts from the document" do
+      expect(doc.facts.size).to eq(3)
+    end
+
+    it "parses fact attributes correctly" do
+      net_sales = doc.facts.find_by_name("NetSales").first
+      expect(net_sales).to be_a(Xbrl::Models::Fact)
+      expect(net_sales.name).to eq("NetSales")
+      expect(net_sales.namespace).to eq("jpcrp")
+      expect(net_sales.context_ref).to eq("CurrentYearDuration")
+      expect(net_sales.unit_ref).to eq("JPY")
+      expect(net_sales.decimals).to eq("-6")
+    end
+
+    it "identifies numeric facts" do
+      net_sales = doc.facts.find_by_name("NetSales").first
+      expect(net_sales.numeric?).to be true
+      expect(net_sales.to_i).to eq(1_000_000_000)
+    end
+
+    it "supports querying by name" do
+      net_sales_facts = doc.facts.find_by_name("NetSales")
+      expect(net_sales_facts.size).to eq(2)
+    end
+
+    it "supports querying by context" do
+      current_year_facts = doc.facts.find_by_context("CurrentYearDuration")
+      expect(current_year_facts.size).to eq(1)
+    end
+
+    it "supports filtering numeric facts" do
+      numeric_facts = doc.facts.numeric
+      expect(numeric_facts.size).to eq(3)
+      expect(numeric_facts).to all(be_numeric)
+    end
+  end
 end

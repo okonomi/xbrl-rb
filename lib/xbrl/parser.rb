@@ -6,6 +6,11 @@ require "date"
 module Xbrl
   # Internal XML parser for XBRL documents
   class Parser
+    # XBRL structural element names (not facts)
+    STRUCTURAL_ELEMENTS = %w[
+      context unit schemaRef linkbaseRef roleRef arcroleRef footnoteLink
+      link loc label reference part
+    ].freeze
     # @param xml_content [String] XML content to parse
     def initialize(xml_content)
       @doc = Ox.parse(xml_content)
@@ -14,11 +19,12 @@ module Xbrl
     end
 
     # Parse the XBRL document
-    # @return [Hash] Parsed data with :contexts and :units keys
+    # @return [Hash] Parsed data with :contexts, :units, and :facts keys
     def parse
       {
         contexts: parse_contexts,
-        units: parse_units
+        units: parse_units,
+        facts: parse_facts
       }
     end
 
@@ -201,6 +207,59 @@ module Xbrl
       )
     rescue StandardError => e
       warn "Failed to parse unit: #{e.message}"
+      nil
+    end
+
+    # Parse all fact elements
+    # @return [Array<Models::Fact>]
+    def parse_facts
+      facts = []
+      traverse(@doc) do |node|
+        next unless node.is_a?(Ox::Element)
+
+        element_name = Namespace.strip_namespace(node.name)
+        next if STRUCTURAL_ELEMENTS.include?(element_name)
+
+        # Check if this looks like a fact (has contextRef attribute)
+        context_ref = node[:contextRef]
+        next unless context_ref
+
+        fact = parse_fact(node)
+        facts << fact if fact
+      end
+      facts
+    end
+
+    # Parse a single fact element
+    # @param fact_node [Ox::Element] Fact element
+    # @return [Models::Fact, nil]
+    def parse_fact(fact_node)
+      name = Namespace.strip_namespace(fact_node.name)
+      namespace = Namespace.extract_prefix(fact_node.name)
+      context_ref = fact_node[:contextRef]
+      unit_ref = fact_node[:unitRef]
+      decimals = fact_node[:decimals]
+      value = extract_text(fact_node)
+
+      # Collect all other attributes
+      attributes = {}
+      fact_node.attributes.each do |attr_name, attr_value|
+        next if %i[contextRef unitRef decimals].include?(attr_name)
+
+        attributes[attr_name.to_s] = attr_value
+      end
+
+      Models::Fact.new(
+        name: name,
+        value: value,
+        context_ref: context_ref,
+        namespace: namespace,
+        unit_ref: unit_ref,
+        decimals: decimals,
+        attributes: attributes
+      )
+    rescue StandardError => e
+      warn "Failed to parse fact: #{e.message}"
       nil
     end
   end

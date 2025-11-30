@@ -12,7 +12,7 @@ Style/StringLiteralsInInterpolation:
 
 # Metrics - Relax for parser code
 Metrics/ClassLength:
-  Max: 150
+  Max: 180
 
 Metrics/MethodLength:
   Max: 30
