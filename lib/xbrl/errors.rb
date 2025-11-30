@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   # Base error class for all XBRL-related errors
   class Error < StandardError; end
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Collections::ContextCollection do
+RSpec.describe XBRL::Collections::ContextCollection do
   let(:context1) do
-    Xbrl::Models::Context.new(
+    XBRL::Models::Context.new(
       id: "ctx1",
       entity_scheme: "http://example.com",
       entity_id: "E12345",
@@ -12,7 +12,7 @@ RSpec.describe Xbrl::Collections::ContextCollection do
   end
 
   let(:context2) do
-    Xbrl::Models::Context.new(
+    XBRL::Models::Context.new(
       id: "ctx2",
       entity_scheme: "http://example.com",
       entity_id: "E12345",
@@ -23,7 +23,7 @@ RSpec.describe Xbrl::Collections::ContextCollection do
   end
 
   let(:context3) do
-    Xbrl::Models::Context.new(
+    XBRL::Models::Context.new(
       id: "ctx3",
       entity_scheme: "http://example.com",
       entity_id: "E67890",
@@ -92,12 +92,12 @@ RSpec.describe Xbrl::Collections::ContextCollection do
 
   describe "#with_dimensions" do
     it "returns contexts with dimensions" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
 
-      context_with_dim = Xbrl::Models::Context.new(
+      context_with_dim = XBRL::Models::Context.new(
         id: "ctx4",
         entity_scheme: "http://example.com",
         entity_id: "E12345",
@@ -116,12 +116,12 @@ RSpec.describe Xbrl::Collections::ContextCollection do
 
   describe "#without_dimensions" do
     it "returns contexts without dimensions" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
 
-      context_with_dim = Xbrl::Models::Context.new(
+      context_with_dim = XBRL::Models::Context.new(
         id: "ctx4",
         entity_scheme: "http://example.com",
         entity_id: "E12345",
@@ -140,12 +140,12 @@ RSpec.describe Xbrl::Collections::ContextCollection do
 
   describe "#find_by_dimension" do
     it "finds contexts by dimension name and value" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
 
-      context_with_dim = Xbrl::Models::Context.new(
+      context_with_dim = XBRL::Models::Context.new(
         id: "ctx4",
         entity_scheme: "http://example.com",
         entity_id: "E12345",
@@ -162,12 +162,12 @@ RSpec.describe Xbrl::Collections::ContextCollection do
     end
 
     it "finds contexts by dimension name only" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
 
-      context_with_dim = Xbrl::Models::Context.new(
+      context_with_dim = XBRL::Models::Context.new(
         id: "ctx4",
         entity_scheme: "http://example.com",
         entity_id: "E12345",

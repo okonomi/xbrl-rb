@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Models::Dimension do
+RSpec.describe XBRL::Models::Dimension do
   describe "#initialize" do
     it "creates an explicit dimension" do
       dimension = described_class.new(

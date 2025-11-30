@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Collections::UnitCollection do
+RSpec.describe XBRL::Collections::UnitCollection do
   let(:unit1) do
-    Xbrl::Models::Unit.new(
+    XBRL::Models::Unit.new(
       id: "JPY",
       measures: ["iso4217:JPY"]
     )
   end
 
   let(:unit2) do
-    Xbrl::Models::Unit.new(
+    XBRL::Models::Unit.new(
       id: "USD",
       measures: ["iso4217:USD"]
     )
   end
 
   let(:unit3) do
-    Xbrl::Models::Unit.new(
+    XBRL::Models::Unit.new(
       id: "shares",
       measures: ["xbrli:shares"]
     )
   end
 
   let(:unit4) do
-    Xbrl::Models::Unit.new(
+    XBRL::Models::Unit.new(
       id: "pure",
       measures: ["xbrli:pure"]
     )

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Collections::FactCollection do
+RSpec.describe XBRL::Collections::FactCollection do
   let(:fact1) do
-    Xbrl::Models::Fact.new(
+    XBRL::Models::Fact.new(
       name: "NetSales",
       value: "1000000000",
       context_ref: "CurrentYear",
@@ -12,7 +12,7 @@ RSpec.describe Xbrl::Collections::FactCollection do
   end
 
   let(:fact2) do
-    Xbrl::Models::Fact.new(
+    XBRL::Models::Fact.new(
       name: "NetSales",
       value: "950000000",
       context_ref: "PriorYear",
@@ -22,7 +22,7 @@ RSpec.describe Xbrl::Collections::FactCollection do
   end
 
   let(:fact3) do
-    Xbrl::Models::Fact.new(
+    XBRL::Models::Fact.new(
       name: "CompanyName",
       value: "Test Company",
       context_ref: "CurrentYear",
@@ -36,7 +36,7 @@ RSpec.describe Xbrl::Collections::FactCollection do
     it "finds facts by name" do
       results = collection.find_by_name("NetSales")
       expect(results.size).to eq(2)
-      expect(results).to all(be_a(Xbrl::Models::Fact))
+      expect(results).to all(be_a(XBRL::Models::Fact))
     end
 
     it "returns empty array when no match" do

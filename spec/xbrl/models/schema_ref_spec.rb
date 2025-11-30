@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Models::SchemaRef do
+RSpec.describe XBRL::Models::SchemaRef do
   describe "#initialize" do
     it "creates a schema reference with href and type" do
       schema_ref = described_class.new(

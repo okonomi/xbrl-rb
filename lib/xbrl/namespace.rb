@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   # XBRL namespace constants and helpers
   module Namespace
     # Standard XBRL namespaces

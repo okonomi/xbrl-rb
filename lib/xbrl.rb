@@ -30,7 +30,7 @@ require_relative "xbrl/document"
 # instance documents with a focus on Japanese financial reporting formats (EDINET/TDnet).
 #
 # @example Parse an XBRL document
-#   doc = Xbrl::Document.parse("path/to/instance.xml")
+#   doc = XBRL::Document.parse("path/to/instance.xml")
 #   doc.facts.each { |fact| puts "#{fact.name}: #{fact.value}" }
-module Xbrl
+module XBRL
 end

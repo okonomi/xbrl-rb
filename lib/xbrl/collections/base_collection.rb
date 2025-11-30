@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   module Collections
     # Base collection class providing Enumerable functionality
     class BaseCollection

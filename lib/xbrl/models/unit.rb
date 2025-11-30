@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   module Models
     # Represents an XBRL unit
     # Units define the measurement unit for numeric facts (e.g., currency, shares)

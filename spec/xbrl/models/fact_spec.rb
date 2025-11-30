@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Models::Fact do
+RSpec.describe XBRL::Models::Fact do
   describe "#initialize" do
     it "creates a numeric fact" do
       fact = described_class.new(

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   module Models
     # Represents an XBRL dimension
     # Dimensions provide additional context categorization beyond period and entity

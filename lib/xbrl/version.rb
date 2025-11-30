@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   VERSION = "0.4.0"
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   module Models
     # Represents an XBRL schema reference
     # Schema references link to taxonomy schemas

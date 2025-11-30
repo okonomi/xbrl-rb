@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Models::Context do
+RSpec.describe XBRL::Models::Context do
   describe "#initialize" do
     it "creates a duration context" do
       context = described_class.new(
@@ -78,7 +78,7 @@ RSpec.describe Xbrl::Models::Context do
 
   describe "#dimensions?" do
     it "returns true when context has dimensions" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
@@ -108,7 +108,7 @@ RSpec.describe Xbrl::Models::Context do
 
   describe "#dimension" do
     it "returns dimension by name" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
@@ -138,11 +138,11 @@ RSpec.describe Xbrl::Models::Context do
 
   describe "#dimension_names" do
     it "returns all dimension names" do
-      segment_dim = Xbrl::Models::Dimension.new(
+      segment_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan"
       )
-      region_dim = Xbrl::Models::Dimension.new(
+      region_dim = XBRL::Models::Dimension.new(
         name: "Region",
         value: "Tokyo"
       )
@@ -161,12 +161,12 @@ RSpec.describe Xbrl::Models::Context do
 
   describe "#explicit_dimensions" do
     it "returns only explicit dimensions" do
-      explicit_dim = Xbrl::Models::Dimension.new(
+      explicit_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan",
         type: :explicit
       )
-      typed_dim = Xbrl::Models::Dimension.new(
+      typed_dim = XBRL::Models::Dimension.new(
         name: "Date",
         value: "2023-12-31",
         type: :typed
@@ -187,12 +187,12 @@ RSpec.describe Xbrl::Models::Context do
 
   describe "#typed_dimensions" do
     it "returns only typed dimensions" do
-      explicit_dim = Xbrl::Models::Dimension.new(
+      explicit_dim = XBRL::Models::Dimension.new(
         name: "Segment",
         value: "Japan",
         type: :explicit
       )
-      typed_dim = Xbrl::Models::Dimension.new(
+      typed_dim = XBRL::Models::Dimension.new(
         name: "Date",
         value: "2023-12-31",
         type: :typed

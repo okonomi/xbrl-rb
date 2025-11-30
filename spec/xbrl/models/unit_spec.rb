@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Models::Unit do
+RSpec.describe XBRL::Models::Unit do
   describe "#initialize" do
     it "creates a simple unit" do
       unit = described_class.new(

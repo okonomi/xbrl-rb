@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Document do
+RSpec.describe XBRL::Document do
   describe ".parse" do
     it "parses a simple XBRL instance document" do
       doc = described_class.parse(fixture_path("simple_instance.xml"))
 
-      expect(doc).to be_a(Xbrl::Document)
+      expect(doc).to be_a(XBRL::Document)
       expect(doc.contexts).not_to be_empty
       expect(doc.units).not_to be_empty
     end
@@ -13,7 +13,7 @@ RSpec.describe Xbrl::Document do
     it "raises an error for non-existent files" do
       expect do
         described_class.parse("nonexistent.xml")
-      end.to raise_error(Xbrl::InvalidDocumentError, /File not found/)
+      end.to raise_error(XBRL::InvalidDocumentError, /File not found/)
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.describe Xbrl::Document do
       xml = load_fixture("simple_instance.xml")
       doc = described_class.parse_string(xml)
 
-      expect(doc).to be_a(Xbrl::Document)
+      expect(doc).to be_a(XBRL::Document)
       expect(doc.contexts).not_to be_empty
       expect(doc.units).not_to be_empty
     end
@@ -30,7 +30,7 @@ RSpec.describe Xbrl::Document do
     it "raises an error for invalid XML" do
       expect do
         described_class.parse_string("<invalid>")
-      end.to raise_error(Xbrl::ParseError)
+      end.to raise_error(XBRL::ParseError)
     end
   end
 
@@ -38,7 +38,7 @@ RSpec.describe Xbrl::Document do
     let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
 
     it "returns a ContextCollection" do
-      expect(doc.contexts).to be_a(Xbrl::Collections::ContextCollection)
+      expect(doc.contexts).to be_a(XBRL::Collections::ContextCollection)
     end
 
     it "returns all contexts" do
@@ -47,7 +47,7 @@ RSpec.describe Xbrl::Document do
 
     it "parses context attributes correctly" do
       context = doc.contexts.first
-      expect(context).to be_a(Xbrl::Models::Context)
+      expect(context).to be_a(XBRL::Models::Context)
       expect(context.id).to eq("CurrentYearDuration")
       expect(context.entity_id).to eq("E12345-001")
       expect(context.entity_scheme).to eq("http://disclosure.edinet-fsa.go.jp")
@@ -75,7 +75,7 @@ RSpec.describe Xbrl::Document do
     let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
 
     it "returns a UnitCollection" do
-      expect(doc.units).to be_a(Xbrl::Collections::UnitCollection)
+      expect(doc.units).to be_a(XBRL::Collections::UnitCollection)
     end
 
     it "returns all units" do
@@ -84,7 +84,7 @@ RSpec.describe Xbrl::Document do
 
     it "parses unit attributes correctly" do
       unit = doc.find_unit("JPY")
-      expect(unit).to be_a(Xbrl::Models::Unit)
+      expect(unit).to be_a(XBRL::Models::Unit)
       expect(unit.id).to eq("JPY")
       expect(unit.measure).to eq("iso4217:JPY")
     end
@@ -143,7 +143,7 @@ RSpec.describe Xbrl::Document do
     let(:doc) { described_class.parse(fixture_path("simple_instance.xml")) }
 
     it "returns a FactCollection" do
-      expect(doc.facts).to be_a(Xbrl::Collections::FactCollection)
+      expect(doc.facts).to be_a(XBRL::Collections::FactCollection)
     end
 
     it "parses all facts from the document" do
@@ -152,7 +152,7 @@ RSpec.describe Xbrl::Document do
 
     it "parses fact attributes correctly" do
       net_sales = doc.facts.find_by_name("NetSales").first
-      expect(net_sales).to be_a(Xbrl::Models::Fact)
+      expect(net_sales).to be_a(XBRL::Models::Fact)
       expect(net_sales.name).to eq("NetSales")
       expect(net_sales.namespace).to eq("jpcrp")
       expect(net_sales.context_ref).to eq("CurrentYearDuration")

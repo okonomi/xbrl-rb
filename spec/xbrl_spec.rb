@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl do
+RSpec.describe XBRL do
   it "has a version number" do
-    expect(Xbrl::VERSION).not_to be_nil
+    expect(XBRL::VERSION).not_to be_nil
   end
 end

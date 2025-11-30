@@ -3,7 +3,7 @@
 require "ox"
 require "date"
 
-module Xbrl
+module XBRL
   # Internal XML parser for XBRL documents
   class Parser
     # XBRL structural element names (not facts)

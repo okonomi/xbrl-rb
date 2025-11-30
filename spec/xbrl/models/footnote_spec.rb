@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Xbrl::Models::Footnote do
+RSpec.describe XBRL::Models::Footnote do
   describe "#initialize" do
     it "creates a footnote with id, text, and language" do
       footnote = described_class.new(

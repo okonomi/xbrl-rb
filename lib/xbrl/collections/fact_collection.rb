@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   module Collections
     # Collection of XBRL facts with query methods
     class FactCollection < BaseCollection

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Xbrl
+module XBRL
   # Represents an XBRL instance document
   class Document
     attr_reader :contexts, :units, :facts, :schema_refs, :footnotes
