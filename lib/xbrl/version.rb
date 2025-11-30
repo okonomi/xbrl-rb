@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
 module Xbrl
-  module Rb
-    VERSION = "0.1.0"
-  end
+  VERSION = "0.4.0"
 end

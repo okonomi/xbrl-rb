@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "xbrl/rb"
+require "xbrl"
 
 # Load support files
 Dir[File.join(__dir__, "support", "**", "*.rb")].each { |f| require f }

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/xbrl/rb/version"
+require_relative "lib/xbrl/version"
 
 Gem::Specification.new do |spec|
   spec.name = "xbrl-rb"
-  spec.version = Xbrl::Rb::VERSION
+  spec.version = Xbrl::VERSION
   spec.authors = ["okonomi"]
   spec.email = ["okonomi@oknm.jp"]
 

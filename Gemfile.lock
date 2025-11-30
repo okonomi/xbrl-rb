@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    xbrl-rb (0.1.0)
+    xbrl-rb (0.4.0)
       ox (~> 2.14)
 
 GEM

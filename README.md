@@ -40,7 +40,7 @@ gem install xbrl-rb
 ### Basic Usage
 
 ```ruby
-require "xbrl/rb"
+require "xbrl"
 
 # Parse an XBRL document from a file
 doc = Xbrl::Document.parse("path/to/instance.xml")
