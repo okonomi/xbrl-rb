@@ -14,3 +14,4 @@ gem "rubocop", "~> 1.21"
 gem "rubocop-rbs_inline", require: false
 
 gem "rbs-inline", require: false
+gem "steep", require: false

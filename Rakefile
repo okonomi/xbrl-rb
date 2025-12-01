@@ -9,4 +9,15 @@ require "rubocop/rake_task"
 
 RuboCop::RakeTask.new
 
+# Steep type checking
+begin
+  require "steep/rake_task"
+rescue LoadError
+  # steep not available
+else
+  Steep::RakeTask.new do |t|
+    t.check.severity_level = :error
+  end
+end
+
 task default: %i[spec rubocop]
