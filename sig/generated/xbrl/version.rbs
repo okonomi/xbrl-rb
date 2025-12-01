@@ -1,0 +1,5 @@
+# Generated from lib/xbrl/version.rb with RBS::Inline
+
+module XBRL
+  VERSION: ::String
+end

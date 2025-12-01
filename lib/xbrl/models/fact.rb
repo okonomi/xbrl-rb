@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   module Models
     # Represents an XBRL fact (data point)
@@ -8,13 +10,15 @@ module XBRL
       attr_reader :name, :value, :context_ref, :unit_ref,
                   :decimals, :namespace, :attributes
 
-      # @param name [String] Fact name (concept name without namespace prefix)
-      # @param value [String] Fact value
-      # @param context_ref [String] Reference to context ID
-      # @param namespace [String] Namespace prefix
-      # @param unit_ref [String, nil] Reference to unit ID (for numeric facts)
-      # @param decimals [String, nil] Decimal precision indicator
-      # @param attributes [Hash] Additional attributes
+      #: (
+      #     name: String,
+      #     value: String,
+      #     context_ref: String,
+      #     namespace: String,
+      #     ?unit_ref: String?,
+      #     ?decimals: String?,
+      #     ?attributes: Hash[String, String]
+      #   ) -> void
       def initialize(name:, value:, context_ref:, namespace:,
                      unit_ref: nil, decimals: nil, attributes: {})
         @name = name
@@ -29,13 +33,13 @@ module XBRL
       end
 
       # Check if this is a numeric fact
-      # @return [Boolean]
+      #: () -> bool
       def numeric?
         !unit_ref.nil? && value.to_s.match?(/^-?\d+(\.\d+)?$/)
       end
 
       # Convert to integer
-      # @return [Integer, nil]
+      #: () -> Integer?
       def to_i
         return nil unless numeric?
 
@@ -43,7 +47,7 @@ module XBRL
       end
 
       # Convert to float
-      # @return [Float, nil]
+      #: () -> Float?
       def to_f
         return nil unless numeric?
 
@@ -51,13 +55,13 @@ module XBRL
       end
 
       # Convert to string
-      # @return [String]
+      #: () -> String
       def to_s
         value.to_s
       end
 
       # Get the full qualified name with namespace
-      # @return [String]
+      #: () -> String
       def qualified_name
         namespace ? "#{namespace}:#{name}" : name
       end

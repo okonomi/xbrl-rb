@@ -1,0 +1,16 @@
+# Generated from lib/xbrl/models/schema_ref.rb with RBS::Inline
+
+module XBRL
+  module Models
+    # Represents an XBRL schema reference
+    # Schema references link to taxonomy schemas
+    class SchemaRef
+      attr_reader href: untyped
+
+      attr_reader type: untyped
+
+      # : (href: String, ?type: String) -> void
+      def initialize: (href: String, ?type: String) -> void
+    end
+  end
+end

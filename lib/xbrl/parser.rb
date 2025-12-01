@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 require "ox"
 require "date"
 
@@ -11,7 +13,7 @@ module XBRL
       context unit schemaRef linkbaseRef roleRef arcroleRef footnoteLink
       link loc label reference part
     ].freeze
-    # @param xml_content [String] XML content to parse
+    #: (String) -> void
     def initialize(xml_content)
       @doc = Ox.parse(xml_content)
     rescue Ox::ParseError => e
@@ -19,7 +21,7 @@ module XBRL
     end
 
     # Parse the XBRL document
-    # @return [Hash] Parsed data with :contexts, :units, :facts, :schema_refs, and :footnotes keys
+    #: () -> Hash[Symbol, Array[Models::Context | Models::Unit | Models::Fact | Models::SchemaRef | Models::Footnote]]
     def parse
       {
         contexts: parse_contexts,
@@ -33,8 +35,7 @@ module XBRL
     private
 
     # Find all elements with a specific name
-    # @param element_name [String] Element name to search for
-    # @return [Array<Ox::Element>]
+    #: (String) -> Array[untyped]
     def find_elements(element_name)
       results = []
       traverse(@doc) do |node|
@@ -46,8 +47,7 @@ module XBRL
     end
 
     # Traverse XML tree depth-first
-    # @param node [Ox::Element, Ox::Document] Node to start traversal from
-    # @yield [Ox::Element] Each element in the tree
+    #: (untyped node) { (untyped) -> void } -> void
     def traverse(node, &block)
       yield node if block_given?
 
@@ -59,9 +59,7 @@ module XBRL
     end
 
     # Get text content of first child element with given name
-    # @param parent [Ox::Element] Parent element
-    # @param element_name [String] Child element name to find
-    # @return [String, nil]
+    #: (untyped, String) -> String?
     def get_element_text(parent, element_name)
       return nil unless parent.respond_to?(:nodes)
 
@@ -73,9 +71,7 @@ module XBRL
     end
 
     # Get first child element with given name
-    # @param parent [Ox::Element] Parent element
-    # @param element_name [String] Child element name to find
-    # @return [Ox::Element, nil]
+    #: (untyped, String) -> untyped
     def get_element(parent, element_name)
       return nil unless parent.respond_to?(:nodes)
 
@@ -87,8 +83,7 @@ module XBRL
     end
 
     # Extract text content from element
-    # @param element [Ox::Element] Element to extract text from
-    # @return [String]
+    #: (untyped) -> String
     def extract_text(element)
       return "" unless element.respond_to?(:nodes)
 
@@ -104,7 +99,7 @@ module XBRL
     end
 
     # Parse all context elements
-    # @return [Array<Models::Context>]
+    #: () -> Array[Models::Context]
     def parse_contexts
       find_elements("context").map do |context_node|
         parse_context(context_node)
@@ -112,8 +107,7 @@ module XBRL
     end
 
     # Parse a single context element
-    # @param context_node [Ox::Element] Context element
-    # @return [Models::Context, nil]
+    #: (untyped) -> Models::Context?
     def parse_context(context_node)
       id = context_node[:id]
       return nil unless id
@@ -152,8 +146,7 @@ module XBRL
     end
 
     # Parse period element
-    # @param period [Ox::Element] Period element
-    # @return [Hash, nil] Hash with :type, :start_date, :end_date, :instant_date
+    #: (untyped) -> Hash[Symbol, untyped]?
     def parse_period(period)
       if get_element(period, "instant")
         {
@@ -170,7 +163,7 @@ module XBRL
     end
 
     # Parse all unit elements
-    # @return [Array<Models::Unit>]
+    #: () -> Array[Models::Unit]
     def parse_units
       find_elements("unit").map do |unit_node|
         parse_unit(unit_node)
@@ -178,8 +171,7 @@ module XBRL
     end
 
     # Parse a single unit element
-    # @param unit_node [Ox::Element] Unit element
-    # @return [Models::Unit, nil]
+    #: (untyped) -> Models::Unit?
     def parse_unit(unit_node)
       id = unit_node[:id]
       return nil unless id
@@ -216,7 +208,7 @@ module XBRL
     end
 
     # Parse all fact elements
-    # @return [Array<Models::Fact>]
+    #: () -> Array[Models::Fact]
     def parse_facts
       facts = []
       traverse(@doc) do |node|
@@ -236,8 +228,7 @@ module XBRL
     end
 
     # Parse a single fact element
-    # @param fact_node [Ox::Element] Fact element
-    # @return [Models::Fact, nil]
+    #: (untyped) -> Models::Fact?
     def parse_fact(fact_node)
       name = Namespace.strip_namespace(fact_node.name)
       namespace = Namespace.extract_prefix(fact_node.name)
@@ -269,7 +260,7 @@ module XBRL
     end
 
     # Parse all schema reference elements
-    # @return [Array<Models::SchemaRef>]
+    #: () -> Array[Models::SchemaRef]
     def parse_schema_refs
       find_elements("schemaRef").map do |schema_ref_node|
         parse_schema_ref(schema_ref_node)
@@ -277,8 +268,7 @@ module XBRL
     end
 
     # Parse a single schema reference element
-    # @param schema_ref_node [Ox::Element] SchemaRef element
-    # @return [Models::SchemaRef, nil]
+    #: (untyped) -> Models::SchemaRef?
     def parse_schema_ref(schema_ref_node)
       href = schema_ref_node[:href]
       return nil unless href
@@ -295,7 +285,7 @@ module XBRL
     end
 
     # Parse all footnote elements
-    # @return [Array<Models::Footnote>]
+    #: () -> Array[Models::Footnote]
     def parse_footnotes
       footnotes = []
       find_elements("footnoteLink").each do |footnote_link|
@@ -311,8 +301,7 @@ module XBRL
     end
 
     # Parse a single footnote element
-    # @param footnote_node [Ox::Element] Footnote element
-    # @return [Models::Footnote, nil]
+    #: (untyped) -> Models::Footnote?
     def parse_footnote(footnote_node)
       id = footnote_node[:id]
       return nil unless id
@@ -331,9 +320,7 @@ module XBRL
     end
 
     # Parse dimensions from entity segment or scenario
-    # @param entity [Ox::Element] Entity element
-    # @param context_node [Ox::Element] Context element
-    # @return [Hash{String => Models::Dimension}]
+    #: (untyped, untyped) -> Hash[String, Models::Dimension]
     def parse_dimensions(entity, context_node)
       dimensions = {}
 
@@ -349,8 +336,7 @@ module XBRL
     end
 
     # Parse dimensions from a container element (segment or scenario)
-    # @param container [Ox::Element] Container element
-    # @return [Hash{String => Models::Dimension}]
+    #: (untyped) -> Hash[String, Models::Dimension]
     def parse_dimension_container(container)
       dimensions = {}
 

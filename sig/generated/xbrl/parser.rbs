@@ -1,0 +1,90 @@
+# Generated from lib/xbrl/parser.rb with RBS::Inline
+
+module XBRL
+  # Internal XML parser for XBRL documents
+  class Parser
+    # XBRL structural element names (not facts)
+    STRUCTURAL_ELEMENTS: untyped
+
+    # : (String) -> void
+    def initialize: (String) -> void
+
+    # Parse the XBRL document
+    # : () -> Hash[Symbol, Array[Models::Context | Models::Unit | Models::Fact | Models::SchemaRef | Models::Footnote]]
+    def parse: () -> Hash[Symbol, Array[Models::Context | Models::Unit | Models::Fact | Models::SchemaRef | Models::Footnote]]
+
+    private
+
+    # Find all elements with a specific name
+    # : (String) -> Array[untyped]
+    def find_elements: (String) -> Array[untyped]
+
+    # Traverse XML tree depth-first
+    # : (untyped node) { (untyped) -> void } -> void
+    def traverse: (untyped node) { (untyped) -> void } -> void
+
+    # Get text content of first child element with given name
+    # : (untyped, String) -> String?
+    def get_element_text: (untyped, String) -> String?
+
+    # Get first child element with given name
+    # : (untyped, String) -> untyped
+    def get_element: (untyped, String) -> untyped
+
+    # Extract text content from element
+    # : (untyped) -> String
+    def extract_text: (untyped) -> String
+
+    # Parse all context elements
+    # : () -> Array[Models::Context]
+    def parse_contexts: () -> Array[Models::Context]
+
+    # Parse a single context element
+    # : (untyped) -> Models::Context?
+    def parse_context: (untyped) -> Models::Context?
+
+    # Parse period element
+    # : (untyped) -> Hash[Symbol, untyped]?
+    def parse_period: (untyped) -> Hash[Symbol, untyped]?
+
+    # Parse all unit elements
+    # : () -> Array[Models::Unit]
+    def parse_units: () -> Array[Models::Unit]
+
+    # Parse a single unit element
+    # : (untyped) -> Models::Unit?
+    def parse_unit: (untyped) -> Models::Unit?
+
+    # Parse all fact elements
+    # : () -> Array[Models::Fact]
+    def parse_facts: () -> Array[Models::Fact]
+
+    # Parse a single fact element
+    # : (untyped) -> Models::Fact?
+    def parse_fact: (untyped) -> Models::Fact?
+
+    # Parse all schema reference elements
+    # : () -> Array[Models::SchemaRef]
+    def parse_schema_refs: () -> Array[Models::SchemaRef]
+
+    # Parse a single schema reference element
+    # : (untyped) -> Models::SchemaRef?
+    def parse_schema_ref: (untyped) -> Models::SchemaRef?
+
+    # Parse all footnote elements
+    # : () -> Array[Models::Footnote]
+    def parse_footnotes: () -> Array[Models::Footnote]
+
+    # Parse a single footnote element
+    # : (untyped) -> Models::Footnote?
+    def parse_footnote: (untyped) -> Models::Footnote?
+
+    # Parse dimensions from entity segment or scenario
+    # : (untyped, untyped) -> Hash[String, Models::Dimension]
+    def parse_dimensions: (untyped, untyped) -> Hash[String, Models::Dimension]
+
+    # Parse dimensions from a container element (segment or scenario)
+    # : (untyped) -> Hash[String, Models::Dimension]
+    def parse_dimension_container: (untyped) -> Hash[String, Models::Dimension]
+  end
+end

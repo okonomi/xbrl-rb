@@ -1,0 +1,38 @@
+# Generated from lib/xbrl/models/unit.rb with RBS::Inline
+
+module XBRL
+  module Models
+    # Represents an XBRL unit
+    # Units define the measurement unit for numeric facts (e.g., currency, shares)
+    class Unit
+      attr_reader id: untyped
+
+      attr_reader measures: untyped
+
+      attr_reader divide_measures: untyped
+
+      # : (id: String, measures: Array[String], ?divide_measures: Array[String]) -> void
+      def initialize: (id: String, measures: Array[String], ?divide_measures: Array[String]) -> void
+
+      # Get the primary measure (first measure in the list)
+      # : () -> String?
+      def measure: () -> String?
+
+      # Check if this is a currency unit
+      # : () -> bool
+      def currency?: () -> bool
+
+      # Check if this is a shares unit
+      # : () -> bool
+      def shares?: () -> bool
+
+      # Check if this is a pure number (no unit)
+      # : () -> bool
+      def pure?: () -> bool
+
+      # Check if this is a ratio (has divide measures)
+      # : () -> bool
+      def ratio?: () -> bool
+    end
+  end
+end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   module Models
     # Represents an XBRL schema reference
@@ -7,8 +9,7 @@ module XBRL
     class SchemaRef
       attr_reader :href, :type
 
-      # @param href [String] Schema URI
-      # @param type [String] Link type (typically "simple")
+      #: (href: String, ?type: String) -> void
       def initialize(href:, type: "simple")
         @href = href
         @type = type

@@ -1,20 +1,23 @@
-# frozen_string_literal: true
-
-# rbs_inline: enabled
+# Generated from lib/xbrl/errors.rb with RBS::Inline
 
 module XBRL
   # Base error class for all XBRL-related errors
-  class Error < StandardError; end
+  class Error < StandardError
+  end
 
   # Raised when XML parsing fails
-  class ParseError < Error; end
+  class ParseError < Error
+  end
 
   # Raised when an XBRL document is invalid or malformed
-  class InvalidDocumentError < Error; end
+  class InvalidDocumentError < Error
+  end
 
   # Raised when a referenced context cannot be found
-  class ContextNotFoundError < Error; end
+  class ContextNotFoundError < Error
+  end
 
   # Raised when a referenced unit cannot be found
-  class UnitNotFoundError < Error; end
+  class UnitNotFoundError < Error
+  end
 end

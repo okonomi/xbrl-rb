@@ -1,0 +1,44 @@
+# Generated from lib/xbrl/collections/fact_collection.rb with RBS::Inline
+
+module XBRL
+  module Collections
+    # Collection of XBRL facts with query methods
+    class FactCollection < BaseCollection
+      # Find facts by name
+      # : (String) -> Array[Models::Fact]
+      def find_by_name: (String) -> Array[Models::Fact]
+
+      # Find facts by context reference
+      # : (String) -> Array[Models::Fact]
+      def find_by_context: (String) -> Array[Models::Fact]
+
+      # Find facts by unit reference
+      # : (String) -> Array[Models::Fact]
+      def find_by_unit: (String) -> Array[Models::Fact]
+
+      # Find facts by namespace
+      # : (String) -> Array[Models::Fact]
+      def find_by_namespace: (String) -> Array[Models::Fact]
+
+      # Get only numeric facts
+      # : () -> Array[Models::Fact]
+      def numeric: () -> Array[Models::Fact]
+
+      # Get only non-numeric (text) facts
+      # : () -> Array[Models::Fact]
+      def text: () -> Array[Models::Fact]
+
+      # Group facts by name
+      # : () -> Hash[String, Array[Models::Fact]]
+      def group_by_name: () -> Hash[String, Array[Models::Fact]]
+
+      # Group facts by context
+      # : () -> Hash[String, Array[Models::Fact]]
+      def group_by_context: () -> Hash[String, Array[Models::Fact]]
+
+      # Get unique fact names
+      # : () -> Array[String]
+      def names: () -> Array[String]
+    end
+  end
+end

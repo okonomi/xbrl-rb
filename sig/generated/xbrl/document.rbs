@@ -1,0 +1,37 @@
+# Generated from lib/xbrl/document.rb with RBS::Inline
+
+module XBRL
+  # Represents an XBRL instance document
+  class Document
+    attr_reader contexts: untyped
+
+    attr_reader units: untyped
+
+    attr_reader facts: untyped
+
+    attr_reader schema_refs: untyped
+
+    attr_reader footnotes: untyped
+
+    # : (
+    #      contexts: Array[Models::Context],
+    #      units: Array[Models::Unit],
+    #      ?facts: Array[Models::Fact],
+    #      ?schema_refs: Array[Models::SchemaRef],
+    #      ?footnotes: Array[Models::Footnote]
+    #    ) -> void
+    def initialize: (contexts: Array[Models::Context], units: Array[Models::Unit], ?facts: Array[Models::Fact], ?schema_refs: Array[Models::SchemaRef], ?footnotes: Array[Models::Footnote]) -> void
+
+    # Find a context by ID
+    # : (String) -> Models::Context?
+    def find_context: (String) -> Models::Context?
+
+    # Find a unit by ID
+    # : (String) -> Models::Unit?
+    def find_unit: (String) -> Models::Unit?
+
+    # Find a footnote by ID
+    # : (String) -> Models::Footnote?
+    def find_footnote: (String) -> Models::Footnote?
+  end
+end

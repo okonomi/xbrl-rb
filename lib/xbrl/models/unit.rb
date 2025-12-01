@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   module Models
     # Represents an XBRL unit
@@ -7,9 +9,7 @@ module XBRL
     class Unit
       attr_reader :id, :measures, :divide_measures
 
-      # @param id [String] Unit identifier
-      # @param measures [Array<String>] Numerator measures
-      # @param divide_measures [Array<String>] Denominator measures for ratios (default: [])
+      #: (id: String, measures: Array[String], ?divide_measures: Array[String]) -> void
       def initialize(id:, measures:, divide_measures: [])
         @id = id
         @measures = Array(measures)
@@ -19,13 +19,13 @@ module XBRL
       end
 
       # Get the primary measure (first measure in the list)
-      # @return [String, nil]
+      #: () -> String?
       def measure
         measures.first
       end
 
       # Check if this is a currency unit
-      # @return [Boolean]
+      #: () -> bool
       def currency?
         return false unless measure
 
@@ -33,7 +33,7 @@ module XBRL
       end
 
       # Check if this is a shares unit
-      # @return [Boolean]
+      #: () -> bool
       def shares?
         return false unless measure
 
@@ -41,7 +41,7 @@ module XBRL
       end
 
       # Check if this is a pure number (no unit)
-      # @return [Boolean]
+      #: () -> bool
       def pure?
         return false unless measure
 
@@ -49,7 +49,7 @@ module XBRL
       end
 
       # Check if this is a ratio (has divide measures)
-      # @return [Boolean]
+      #: () -> bool
       def ratio?
         !divide_measures.empty?
       end

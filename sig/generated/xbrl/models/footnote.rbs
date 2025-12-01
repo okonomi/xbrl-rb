@@ -1,0 +1,26 @@
+# Generated from lib/xbrl/models/footnote.rb with RBS::Inline
+
+module XBRL
+  module Models
+    # Represents an XBRL footnote
+    # Footnotes provide additional information about facts
+    class Footnote
+      attr_reader id: untyped
+
+      attr_reader text: untyped
+
+      attr_reader lang: untyped
+
+      # : (id: String, text: String, ?lang: String?) -> void
+      def initialize: (id: String, text: String, ?lang: String?) -> void
+
+      # Check if footnote has a specific language
+      # : (String) -> bool
+      def language?: (String) -> bool
+
+      # Get footnote as plain text
+      # : () -> String
+      def to_s: () -> String
+    end
+  end
+end

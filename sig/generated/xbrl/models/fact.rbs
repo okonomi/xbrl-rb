@@ -1,0 +1,54 @@
+# Generated from lib/xbrl/models/fact.rb with RBS::Inline
+
+module XBRL
+  module Models
+    # Represents an XBRL fact (data point)
+    # Facts are the actual data values in an XBRL document
+    class Fact
+      attr_reader name: untyped
+
+      attr_reader value: untyped
+
+      attr_reader context_ref: untyped
+
+      attr_reader unit_ref: untyped
+
+      attr_reader decimals: untyped
+
+      attr_reader namespace: untyped
+
+      attr_reader attributes: untyped
+
+      # : (
+      #      name: String,
+      #      value: String,
+      #      context_ref: String,
+      #      namespace: String,
+      #      ?unit_ref: String?,
+      #      ?decimals: String?,
+      #      ?attributes: Hash[String, String]
+      #    ) -> void
+      def initialize: (name: String, value: String, context_ref: String, namespace: String, ?unit_ref: String?, ?decimals: String?, ?attributes: Hash[String, String]) -> void
+
+      # Check if this is a numeric fact
+      # : () -> bool
+      def numeric?: () -> bool
+
+      # Convert to integer
+      # : () -> Integer?
+      def to_i: () -> Integer?
+
+      # Convert to float
+      # : () -> Float?
+      def to_f: () -> Float?
+
+      # Convert to string
+      # : () -> String
+      def to_s: () -> String
+
+      # Get the full qualified name with namespace
+      # : () -> String
+      def qualified_name: () -> String
+    end
+  end
+end

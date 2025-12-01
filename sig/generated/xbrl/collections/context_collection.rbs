@@ -1,0 +1,44 @@
+# Generated from lib/xbrl/collections/context_collection.rb with RBS::Inline
+
+module XBRL
+  module Collections
+    # Collection of XBRL contexts with query methods
+    class ContextCollection < BaseCollection
+      # Find context by ID
+      # : (String) -> XBRL::Models::Context?
+      def find_by_id: (String) -> XBRL::Models::Context?
+
+      # Get all instant contexts
+      # : () -> Array[XBRL::Models::Context]
+      def instant: () -> Array[XBRL::Models::Context]
+
+      # Get all duration contexts
+      # : () -> Array[XBRL::Models::Context]
+      def duration: () -> Array[XBRL::Models::Context]
+
+      # Find contexts by entity identifier
+      # : (String) -> Array[XBRL::Models::Context]
+      def find_by_entity: (String) -> Array[XBRL::Models::Context]
+
+      # Get all unique entity identifiers
+      # : () -> Array[String]
+      def entity_identifiers: () -> Array[String]
+
+      # Group contexts by entity identifier
+      # : () -> Hash[String, Array[XBRL::Models::Context]]
+      def group_by_entity: () -> Hash[String, Array[XBRL::Models::Context]]
+
+      # Get contexts with dimensions
+      # : () -> Array[XBRL::Models::Context]
+      def with_dimensions: () -> Array[XBRL::Models::Context]
+
+      # Get contexts without dimensions
+      # : () -> Array[XBRL::Models::Context]
+      def without_dimensions: () -> Array[XBRL::Models::Context]
+
+      # Find contexts by dimension value
+      # : (String dimension_name, ?String? value) -> Array[XBRL::Models::Context]
+      def find_by_dimension: (String dimension_name, ?String? value) -> Array[XBRL::Models::Context]
+    end
+  end
+end

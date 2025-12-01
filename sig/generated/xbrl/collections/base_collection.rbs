@@ -1,0 +1,41 @@
+# Generated from lib/xbrl/collections/base_collection.rb with RBS::Inline
+
+module XBRL
+  module Collections
+    # Base collection class providing Enumerable functionality
+    class BaseCollection
+      include Enumerable
+
+      # : (?Array[untyped] items) -> void
+      def initialize: (?Array[untyped] items) -> void
+
+      # Iterate over items
+      # : () { (untyped) -> void } -> void
+      def each: () { (untyped) -> void } -> void
+
+      # Get the number of items
+      # : () -> Integer
+      def size: () -> Integer
+
+      alias count size
+
+      alias length size
+
+      # Check if collection is empty
+      # : () -> bool
+      def empty?: () -> bool
+
+      # Get first item
+      # : () -> untyped
+      def first: () -> untyped
+
+      # Get last item
+      # : () -> untyped
+      def last: () -> untyped
+
+      # Convert to array
+      # : () -> Array[untyped]
+      def to_a: () -> Array[untyped]
+    end
+  end
+end

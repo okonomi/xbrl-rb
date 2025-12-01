@@ -1,0 +1,36 @@
+# Generated from lib/xbrl/collections/unit_collection.rb with RBS::Inline
+
+module XBRL
+  module Collections
+    # Collection of XBRL units with query methods
+    class UnitCollection < BaseCollection
+      # Find unit by ID
+      # : (String) -> XBRL::Models::Unit?
+      def find_by_id: (String) -> XBRL::Models::Unit?
+
+      # Get all currency units
+      # : () -> Array[XBRL::Models::Unit]
+      def currencies: () -> Array[XBRL::Models::Unit]
+
+      # Get all share units
+      # : () -> Array[XBRL::Models::Unit]
+      def shares: () -> Array[XBRL::Models::Unit]
+
+      # Get all pure/dimensionless units
+      # : () -> Array[XBRL::Models::Unit]
+      def pure: () -> Array[XBRL::Models::Unit]
+
+      # Find units by measure
+      # : (String) -> Array[XBRL::Models::Unit]
+      def find_by_measure: (String) -> Array[XBRL::Models::Unit]
+
+      # Get all unique measures
+      # : () -> Array[String]
+      def measures: () -> Array[String]
+
+      # Group units by measure
+      # : () -> Hash[String, Array[XBRL::Models::Unit]]
+      def group_by_measure: () -> Hash[String, Array[XBRL::Models::Unit]]
+    end
+  end
+end

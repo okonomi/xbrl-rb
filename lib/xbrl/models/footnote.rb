@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   module Models
     # Represents an XBRL footnote
@@ -7,9 +9,7 @@ module XBRL
     class Footnote
       attr_reader :id, :text, :lang
 
-      # @param id [String] Footnote identifier
-      # @param text [String] Footnote text content
-      # @param lang [String, nil] Language code (e.g., "ja", "en")
+      #: (id: String, text: String, ?lang: String?) -> void
       def initialize(id:, text:, lang: nil)
         @id = id
         @text = text
@@ -19,14 +19,13 @@ module XBRL
       end
 
       # Check if footnote has a specific language
-      # @param language [String] Language code to check
-      # @return [Boolean]
+      #: (String) -> bool
       def language?(language)
         lang == language
       end
 
       # Get footnote as plain text
-      # @return [String]
+      #: () -> String
       def to_s
         text
       end

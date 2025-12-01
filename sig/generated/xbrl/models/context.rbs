@@ -1,0 +1,71 @@
+# Generated from lib/xbrl/models/context.rb with RBS::Inline
+
+module XBRL
+  module Models
+    # Represents an XBRL context
+    # Contexts provide dimensional information for facts (period, entity, scenarios)
+    class Context
+      attr_reader id: untyped
+
+      attr_reader entity_scheme: untyped
+
+      attr_reader entity_id: untyped
+
+      attr_reader period_type: untyped
+
+      attr_reader start_date: untyped
+
+      attr_reader end_date: untyped
+
+      attr_reader instant_date: untyped
+
+      attr_reader dimensions: untyped
+
+      # : (
+      #      id: String,
+      #      entity_scheme: String,
+      #      entity_id: String,
+      #      period_type: Symbol,
+      #      ?start_date: String?,
+      #      ?end_date: String?,
+      #      ?instant_date: String?,
+      #      ?dimensions: Hash[String, Dimension]
+      #    ) -> void
+      def initialize: (id: String, entity_scheme: String, entity_id: String, period_type: Symbol, ?start_date: String?, ?end_date: String?, ?instant_date: String?, ?dimensions: Hash[String, Dimension]) -> void
+
+      # Check if this is a duration period
+      # : () -> bool
+      def duration?: () -> bool
+
+      # Check if this is an instant period
+      # : () -> bool
+      def instant?: () -> bool
+
+      # Check if context has dimensions
+      # : () -> bool
+      def dimensions?: () -> bool
+
+      # Get dimension by name
+      # : (String) -> Dimension?
+      def dimension: (String) -> Dimension?
+
+      # Get all dimension names
+      # : () -> Array[String]
+      def dimension_names: () -> Array[String]
+
+      # Get explicit dimensions only
+      # : () -> Hash[String, Dimension]
+      def explicit_dimensions: () -> Hash[String, Dimension]
+
+      # Get typed dimensions only
+      # : () -> Hash[String, Dimension]
+      def typed_dimensions: () -> Hash[String, Dimension]
+
+      private
+
+      # Parse date string into Date object
+      # : (String?) -> Date?
+      def parse_date: (String?) -> Date?
+    end
+  end
+end

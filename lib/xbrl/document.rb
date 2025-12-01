@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   # Represents an XBRL instance document
   class Document
     attr_reader :contexts, :units, :facts, :schema_refs, :footnotes
 
-    # @param contexts [Array<Models::Context>] Contexts
-    # @param units [Array<Models::Unit>] Units
-    # @param facts [Array<Models::Fact>] Facts
-    # @param schema_refs [Array<Models::SchemaRef>] Schema references
-    # @param footnotes [Array<Models::Footnote>] Footnotes
+    #: (
+    #     contexts: Array[Models::Context],
+    #     units: Array[Models::Unit],
+    #     ?facts: Array[Models::Fact],
+    #     ?schema_refs: Array[Models::SchemaRef],
+    #     ?footnotes: Array[Models::Footnote]
+    #   ) -> void
     def initialize(contexts:, units:, facts: [], schema_refs: [], footnotes: [])
       @contexts = Collections::ContextCollection.new(contexts)
       @units = Collections::UnitCollection.new(units)
@@ -21,22 +25,19 @@ module XBRL
     end
 
     # Find a context by ID
-    # @param id [String] Context ID
-    # @return [Models::Context, nil]
+    #: (String) -> Models::Context?
     def find_context(id)
       contexts.find_by_id(id)
     end
 
     # Find a unit by ID
-    # @param id [String] Unit ID
-    # @return [Models::Unit, nil]
+    #: (String) -> Models::Unit?
     def find_unit(id)
       units.find_by_id(id)
     end
 
     # Find a footnote by ID
-    # @param id [String] Footnote ID
-    # @return [Models::Footnote, nil]
+    #: (String) -> Models::Footnote?
     def find_footnote(id)
       footnotes.find { |footnote| footnote.id == id }
     end

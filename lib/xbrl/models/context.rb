@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   module Models
     # Represents an XBRL context
@@ -8,14 +10,16 @@ module XBRL
       attr_reader :id, :entity_scheme, :entity_id, :period_type,
                   :start_date, :end_date, :instant_date, :dimensions
 
-      # @param id [String] Context identifier
-      # @param entity_scheme [String] Entity identifier scheme
-      # @param entity_id [String] Entity identifier value
-      # @param period_type [Symbol] Period type (:duration or :instant)
-      # @param start_date [String, nil] Start date for duration periods (YYYY-MM-DD)
-      # @param end_date [String, nil] End date for duration periods (YYYY-MM-DD)
-      # @param instant_date [String, nil] Instant date for instant periods (YYYY-MM-DD)
-      # @param dimensions [Hash] Dimension members (default: {})
+      #: (
+      #     id: String,
+      #     entity_scheme: String,
+      #     entity_id: String,
+      #     period_type: Symbol,
+      #     ?start_date: String?,
+      #     ?end_date: String?,
+      #     ?instant_date: String?,
+      #     ?dimensions: Hash[String, Dimension]
+      #   ) -> void
       def initialize(id:, entity_scheme:, entity_id:, period_type:,
                      start_date: nil, end_date: nil, instant_date: nil,
                      dimensions: {})
@@ -32,44 +36,43 @@ module XBRL
       end
 
       # Check if this is a duration period
-      # @return [Boolean]
+      #: () -> bool
       def duration?
         period_type == :duration
       end
 
       # Check if this is an instant period
-      # @return [Boolean]
+      #: () -> bool
       def instant?
         period_type == :instant
       end
 
       # Check if context has dimensions
-      # @return [Boolean]
+      #: () -> bool
       def dimensions?
         !dimensions.empty?
       end
 
       # Get dimension by name
-      # @param name [String] Dimension name
-      # @return [Dimension, nil]
+      #: (String) -> Dimension?
       def dimension(name)
         dimensions[name]
       end
 
       # Get all dimension names
-      # @return [Array<String>]
+      #: () -> Array[String]
       def dimension_names
         dimensions.keys
       end
 
       # Get explicit dimensions only
-      # @return [Hash{String => Dimension}]
+      #: () -> Hash[String, Dimension]
       def explicit_dimensions
         dimensions.select { |_name, dim| dim.explicit? }
       end
 
       # Get typed dimensions only
-      # @return [Hash{String => Dimension}]
+      #: () -> Hash[String, Dimension]
       def typed_dimensions
         dimensions.select { |_name, dim| dim.typed? }
       end
@@ -77,8 +80,7 @@ module XBRL
       private
 
       # Parse date string into Date object
-      # @param date_string [String, nil] Date in YYYY-MM-DD format
-      # @return [Date, nil]
+      #: (String?) -> Date?
       def parse_date(date_string)
         return nil if date_string.nil? || date_string.empty?
 

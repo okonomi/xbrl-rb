@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   # XBRL namespace constants and helpers
   module Namespace
@@ -13,21 +15,19 @@ module XBRL
     EDINET_BASE = "http://disclosure.edinet-fsa.go.jp"
 
     # Strip namespace prefix from element name
-    # @param element_name [String] Element name with or without namespace prefix
-    # @return [String] Element name without namespace prefix
     # @example
     #   strip_namespace("jpcrp:NetSales") #=> "NetSales"
     #   strip_namespace("context") #=> "context"
+    #: (String) -> String
     def self.strip_namespace(element_name)
       element_name.to_s.split(":").last
     end
 
     # Extract namespace prefix from element name
-    # @param element_name [String] Element name with or without namespace prefix
-    # @return [String, nil] Namespace prefix or nil if no prefix
     # @example
     #   extract_prefix("jpcrp:NetSales") #=> "jpcrp"
     #   extract_prefix("context") #=> nil
+    #: (String) -> String?
     def self.extract_prefix(element_name)
       parts = element_name.to_s.split(":")
       parts.length > 1 ? parts.first : nil

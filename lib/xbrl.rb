@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 require_relative "xbrl/version"
 
 # Core
@@ -34,8 +36,7 @@ require_relative "xbrl/document"
 #   doc.facts.each { |fact| puts "#{fact.name}: #{fact.value}" }
 module XBRL
   # Parse an XBRL document from a file
-  # @param file_path [String] Path to XBRL file
-  # @return [Document]
+  #: (String) -> Document
   def self.parse(file_path)
     content = File.read(file_path, encoding: "UTF-8")
     parse_string(content)
@@ -46,8 +47,7 @@ module XBRL
   end
 
   # Parse an XBRL document from a string
-  # @param xml_string [String] XML content
-  # @return [Document]
+  #: (String) -> Document
   def self.parse_string(xml_string)
     parser = Parser.new(xml_string)
     data = parser.parse

@@ -1,0 +1,19 @@
+# Generated from lib/xbrl.rb with RBS::Inline
+
+# XBRL parser for Ruby
+#
+# This module provides functionality for parsing XBRL (eXtensible Business Reporting Language)
+# instance documents with a focus on Japanese financial reporting formats (EDINET/TDnet).
+#
+# @example Parse an XBRL document
+#   doc = XBRL.parse("path/to/instance.xml")
+#   doc.facts.each { |fact| puts "#{fact.name}: #{fact.value}" }
+module XBRL
+  # Parse an XBRL document from a file
+  # : (String) -> Document
+  def self.parse: (String) -> Document
+
+  # Parse an XBRL document from a string
+  # : (String) -> Document
+  def self.parse_string: (String) -> Document
+end

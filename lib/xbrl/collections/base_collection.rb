@@ -1,25 +1,27 @@
 # frozen_string_literal: true
 
+# rbs_inline: enabled
+
 module XBRL
   module Collections
     # Base collection class providing Enumerable functionality
     class BaseCollection
       include Enumerable
 
-      # @param items [Array] Collection items
+      #: (?Array[untyped] items) -> void
       def initialize(items = [])
         @items = items
         freeze
       end
 
       # Iterate over items
-      # @yield [Object] Each item in the collection
+      #: () { (untyped) -> void } -> void
       def each(&)
         @items.each(&)
       end
 
       # Get the number of items
-      # @return [Integer]
+      #: () -> Integer
       def size
         @items.size
       end
@@ -27,25 +29,25 @@ module XBRL
       alias length size
 
       # Check if collection is empty
-      # @return [Boolean]
+      #: () -> bool
       def empty?
         @items.empty?
       end
 
       # Get first item
-      # @return [Object, nil]
+      #: () -> untyped
       def first
         @items.first
       end
 
       # Get last item
-      # @return [Object, nil]
+      #: () -> untyped
       def last
         @items.last
       end
 
       # Convert to array
-      # @return [Array]
+      #: () -> Array[untyped]
       def to_a
         @items.dup
       end

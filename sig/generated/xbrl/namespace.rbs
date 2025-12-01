@@ -1,0 +1,32 @@
+# Generated from lib/xbrl/namespace.rb with RBS::Inline
+
+module XBRL
+  # XBRL namespace constants and helpers
+  module Namespace
+    # Standard XBRL namespaces
+    XBRL_INSTANCE: ::String
+
+    LINK: ::String
+
+    XLINK: ::String
+
+    ISO4217: ::String
+
+    # EDINET specific namespaces
+    EDINET_BASE: ::String
+
+    # Strip namespace prefix from element name
+    # @example
+    #   strip_namespace("jpcrp:NetSales") #=> "NetSales"
+    #   strip_namespace("context") #=> "context"
+    # : (String) -> String
+    def self.strip_namespace: (String) -> String
+
+    # Extract namespace prefix from element name
+    # @example
+    #   extract_prefix("jpcrp:NetSales") #=> "jpcrp"
+    #   extract_prefix("context") #=> nil
+    # : (String) -> String?
+    def self.extract_prefix: (String) -> String?
+  end
+end

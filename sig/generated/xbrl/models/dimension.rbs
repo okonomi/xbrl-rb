@@ -1,0 +1,36 @@
+# Generated from lib/xbrl/models/dimension.rb with RBS::Inline
+
+module XBRL
+  module Models
+    # Represents an XBRL dimension
+    # Dimensions provide additional context categorization beyond period and entity
+    class Dimension
+      attr_reader name: untyped
+
+      attr_reader value: untyped
+
+      attr_reader type: untyped
+
+      attr_reader namespace: untyped
+
+      # : (name: String, value: String, ?type: Symbol, ?namespace: String?) -> void
+      def initialize: (name: String, value: String, ?type: Symbol, ?namespace: String?) -> void
+
+      # Check if this is an explicit dimension
+      # : () -> bool
+      def explicit?: () -> bool
+
+      # Check if this is a typed dimension
+      # : () -> bool
+      def typed?: () -> bool
+
+      # Get qualified dimension name
+      # : () -> String
+      def qualified_name: () -> String
+
+      # Get qualified value (for explicit dimensions)
+      # : () -> String
+      def qualified_value: () -> String
+    end
+  end
+end

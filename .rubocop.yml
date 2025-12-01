@@ -4,6 +4,12 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
+plugins:
+  - rubocop-rbs_inline
+
+Layout/LeadingCommentSpace:
+  Enabled: false
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
