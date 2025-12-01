@@ -4,7 +4,10 @@ module XBRL
   module Collections
     # Base collection class providing Enumerable functionality
     class BaseCollection
-      include Enumerable
+      include Enumerable[untyped]
+
+      # : Array[untyped]
+      attr_reader items: untyped
 
       # : (?Array[untyped] items) -> void
       def initialize: (?Array[untyped] items) -> void

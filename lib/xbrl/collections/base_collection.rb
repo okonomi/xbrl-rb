@@ -8,6 +8,9 @@ module XBRL
     class BaseCollection
       include Enumerable
 
+      #: Array[untyped]
+      attr_reader :items
+
       #: (?Array[untyped] items) -> void
       def initialize(items = [])
         @items = items

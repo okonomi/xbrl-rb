@@ -6,18 +6,21 @@ module XBRL
     # XBRL structural element names (not facts)
     STRUCTURAL_ELEMENTS: untyped
 
+    # : Ox::Element
+    attr_reader doc: untyped
+
     # : (String) -> void
     def initialize: (String) -> void
 
     # Parse the XBRL document
-    # : () -> Hash[Symbol, Array[Models::Context | Models::Unit | Models::Fact | Models::SchemaRef | Models::Footnote]]
-    def parse: () -> Hash[Symbol, Array[Models::Context | Models::Unit | Models::Fact | Models::SchemaRef | Models::Footnote]]
+    # : () -> { contexts: Array[Models::Context], units: Array[Models::Unit], facts: Array[Models::Fact], schema_refs: Array[Models::SchemaRef], footnotes: Array[Models::Footnote] }
+    def parse: () -> { contexts: Array[Models::Context], units: Array[Models::Unit], facts: Array[Models::Fact], schema_refs: Array[Models::SchemaRef], footnotes: Array[Models::Footnote] }
 
     private
 
     # Find all elements with a specific name
-    # : (String) -> Array[untyped]
-    def find_elements: (String) -> Array[untyped]
+    # : (String) -> Array[Ox::Element]
+    def find_elements: (String) -> Array[Ox::Element]
 
     # Traverse XML tree depth-first
     # : (untyped node) { (untyped) -> void } -> void

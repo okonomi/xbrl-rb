@@ -1,0 +1,18 @@
+# Type definitions for Ox gem
+# https://github.com/ohler55/ox
+
+module Ox
+  class Element
+    def name: () -> String
+    def nodes: () -> Array[Element | String]
+    def attributes: () -> Hash[Symbol, String]
+    def []: (Symbol) -> String?
+    def respond_to?: (Symbol) -> bool
+    def is_a?: (untyped) -> bool
+  end
+
+  class ParseError < StandardError
+  end
+
+  def self.parse: (String) -> Element
+end

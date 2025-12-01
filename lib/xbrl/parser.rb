@@ -13,6 +13,10 @@ module XBRL
       context unit schemaRef linkbaseRef roleRef arcroleRef footnoteLink
       link loc label reference part
     ].freeze
+
+    #: Ox::Element
+    attr_reader :doc
+
     #: (String) -> void
     def initialize(xml_content)
       @doc = Ox.parse(xml_content)
@@ -21,7 +25,7 @@ module XBRL
     end
 
     # Parse the XBRL document
-    #: () -> Hash[Symbol, Array[Models::Context | Models::Unit | Models::Fact | Models::SchemaRef | Models::Footnote]]
+    #: () -> { contexts: Array[Models::Context], units: Array[Models::Unit], facts: Array[Models::Fact], schema_refs: Array[Models::SchemaRef], footnotes: Array[Models::Footnote] }
     def parse
       {
         contexts: parse_contexts,
@@ -35,9 +39,9 @@ module XBRL
     private
 
     # Find all elements with a specific name
-    #: (String) -> Array[untyped]
+    #: (String) -> Array[Ox::Element]
     def find_elements(element_name)
-      results = []
+      results = [] #: Array[Ox::Element]
       traverse(@doc) do |node|
         next unless node.is_a?(Ox::Element)
 
@@ -176,8 +180,8 @@ module XBRL
       id = unit_node[:id]
       return nil unless id
 
-      measures = []
-      divide_measures = []
+      measures = [] #: Array[String]
+      divide_measures = [] #: Array[String]
 
       unit_node.nodes.each do |child|
         next unless child.is_a?(Ox::Element)
@@ -210,7 +214,7 @@ module XBRL
     # Parse all fact elements
     #: () -> Array[Models::Fact]
     def parse_facts
-      facts = []
+      facts = [] #: Array[Models::Fact]
       traverse(@doc) do |node|
         next unless node.is_a?(Ox::Element)
 
@@ -238,7 +242,7 @@ module XBRL
       value = extract_text(fact_node)
 
       # Collect all other attributes
-      attributes = {}
+      attributes = {} #: Hash[String, String]
       fact_node.attributes.each do |attr_name, attr_value|
         next if %i[contextRef unitRef decimals].include?(attr_name)
 
@@ -287,7 +291,7 @@ module XBRL
     # Parse all footnote elements
     #: () -> Array[Models::Footnote]
     def parse_footnotes
-      footnotes = []
+      footnotes = [] #: Array[Models::Footnote]
       find_elements("footnoteLink").each do |footnote_link|
         footnote_link.nodes.each do |child|
           next unless child.is_a?(Ox::Element)
@@ -322,7 +326,7 @@ module XBRL
     # Parse dimensions from entity segment or scenario
     #: (untyped, untyped) -> Hash[String, Models::Dimension]
     def parse_dimensions(entity, context_node)
-      dimensions = {}
+      dimensions = {} #: Hash[String, Models::Dimension]
 
       # Parse dimensions from entity segment
       segment = get_element(entity, "segment")
@@ -338,7 +342,7 @@ module XBRL
     # Parse dimensions from a container element (segment or scenario)
     #: (untyped) -> Hash[String, Models::Dimension]
     def parse_dimension_container(container)
-      dimensions = {}
+      dimensions = {} #: Hash[String, Models::Dimension]
 
       return dimensions unless container.respond_to?(:nodes)
 

@@ -27,25 +27,28 @@ module XBRL
       # Check if this is a currency unit
       #: () -> bool
       def currency?
-        return false unless measure
+        m = measure
+        return false unless m
 
-        measure.include?("iso4217") || measure.match?(/[A-Z]{3}$/)
+        m.include?("iso4217") || m.match?(/[A-Z]{3}$/)
       end
 
       # Check if this is a shares unit
       #: () -> bool
       def shares?
-        return false unless measure
+        m = measure
+        return false unless m
 
-        measure.include?("shares") || measure.include?("Shares")
+        m.include?("shares") || m.include?("Shares")
       end
 
       # Check if this is a pure number (no unit)
       #: () -> bool
       def pure?
-        return false unless measure
+        m = measure
+        return false unless m
 
-        measure.include?("pure") || measure.include?("Pure")
+        m.include?("pure") || m.include?("Pure")
       end
 
       # Check if this is a ratio (has divide measures)
