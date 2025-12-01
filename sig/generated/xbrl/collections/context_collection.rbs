@@ -3,7 +3,7 @@
 module XBRL
   module Collections
     # Collection of XBRL contexts with query methods
-    class ContextCollection < BaseCollection
+    class ContextCollection < BaseCollection[Models::Context]
       # Find context by ID
       # : (String) -> XBRL::Models::Context?
       def find_by_id: (String) -> XBRL::Models::Context?

@@ -3,14 +3,19 @@
 module XBRL
   # Represents an XBRL instance document
   class Document
+    # : Collections::ContextCollection
     attr_reader contexts: untyped
 
+    # : Collections::UnitCollection
     attr_reader units: untyped
 
+    # : Collections::FactCollection
     attr_reader facts: untyped
 
+    # : Array[Models::SchemaRef]
     attr_reader schema_refs: untyped
 
+    # : Array[Models::Footnote]
     attr_reader footnotes: untyped
 
     # : (

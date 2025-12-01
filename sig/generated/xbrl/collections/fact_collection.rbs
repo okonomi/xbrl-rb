@@ -3,7 +3,7 @@
 module XBRL
   module Collections
     # Collection of XBRL facts with query methods
-    class FactCollection < BaseCollection
+    class FactCollection < BaseCollection[Models::Fact]
       # Find facts by name
       # : (String) -> Array[Models::Fact]
       def find_by_name: (String) -> Array[Models::Fact]

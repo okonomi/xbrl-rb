@@ -47,7 +47,7 @@ module XBRL
       # Group units by measure
       #: () -> Hash[String, Array[XBRL::Models::Unit]]
       def group_by_measure
-        group_by(&:measure)
+        group_by { |unit| unit.measure || "" }
       end
     end
   end

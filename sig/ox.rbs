@@ -9,6 +9,7 @@ module Ox
     def []: (Symbol) -> String?
     def respond_to?: (Symbol) -> bool
     def is_a?: (untyped) -> bool
+    def text: () -> String
   end
 
   class ParseError < StandardError

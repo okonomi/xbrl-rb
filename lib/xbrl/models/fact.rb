@@ -13,7 +13,7 @@ module XBRL
       #: (
       #     name: String,
       #     value: String,
-      #     context_ref: String,
+      #     context_ref: String?,
       #     namespace: String?,
       #     ?unit_ref: String?,
       #     ?decimals: String?,

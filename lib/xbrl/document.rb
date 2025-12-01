@@ -5,7 +5,20 @@
 module XBRL
   # Represents an XBRL instance document
   class Document
-    attr_reader :contexts, :units, :facts, :schema_refs, :footnotes
+    #: Collections::ContextCollection
+    attr_reader :contexts
+
+    #: Collections::UnitCollection
+    attr_reader :units
+
+    #: Collections::FactCollection
+    attr_reader :facts
+
+    #: Array[Models::SchemaRef]
+    attr_reader :schema_refs
+
+    #: Array[Models::Footnote]
+    attr_reader :footnotes
 
     #: (
     #     contexts: Array[Models::Context],

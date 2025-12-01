@@ -51,11 +51,11 @@ module XBRL
     end
 
     # Traverse XML tree depth-first
-    #: (untyped node) { (untyped) -> void } -> void
+    #: (Ox::Element | String node) { (Ox::Element | String) -> void } -> void
     def traverse(node, &block)
       yield node if block_given?
 
-      return unless node.respond_to?(:nodes)
+      return unless node.is_a?(Ox::Element)
 
       node.nodes.each do |child|
         traverse(child, &block)
@@ -63,7 +63,7 @@ module XBRL
     end
 
     # Get text content of first child element with given name
-    #: (untyped, String) -> String?
+    #: (Ox::Element, String) -> String?
     def get_element_text(parent, element_name)
       return nil unless parent.respond_to?(:nodes)
 
@@ -75,7 +75,7 @@ module XBRL
     end
 
     # Get first child element with given name
-    #: (untyped, String) -> untyped
+    #: (Ox::Element, String) -> Ox::Element?
     def get_element(parent, element_name)
       return nil unless parent.respond_to?(:nodes)
 
@@ -87,7 +87,7 @@ module XBRL
     end
 
     # Extract text content from element
-    #: (untyped) -> String
+    #: (Ox::Element) -> String
     def extract_text(element)
       return "" unless element.respond_to?(:nodes)
 
@@ -111,7 +111,7 @@ module XBRL
     end
 
     # Parse a single context element
-    #: (untyped) -> Models::Context?
+    #: (Ox::Element) -> Models::Context?
     def parse_context(context_node)
       id = context_node[:id]
       return nil unless id
@@ -150,7 +150,7 @@ module XBRL
     end
 
     # Parse period element
-    #: (untyped) -> Hash[Symbol, untyped]?
+    #: (Ox::Element) -> { type: Symbol, start_date: String?, end_date: String?, instant_date: String? }?
     def parse_period(period)
       if get_element(period, "instant")
         {
@@ -175,7 +175,7 @@ module XBRL
     end
 
     # Parse a single unit element
-    #: (untyped) -> Models::Unit?
+    #: (Ox::Element) -> Models::Unit?
     def parse_unit(unit_node)
       id = unit_node[:id]
       return nil unless id
@@ -232,7 +232,7 @@ module XBRL
     end
 
     # Parse a single fact element
-    #: (untyped) -> Models::Fact?
+    #: (Ox::Element) -> Models::Fact?
     def parse_fact(fact_node)
       name = Namespace.strip_namespace(fact_node.name)
       namespace = Namespace.extract_prefix(fact_node.name)
@@ -272,7 +272,7 @@ module XBRL
     end
 
     # Parse a single schema reference element
-    #: (untyped) -> Models::SchemaRef?
+    #: (Ox::Element) -> Models::SchemaRef?
     def parse_schema_ref(schema_ref_node)
       href = schema_ref_node[:href]
       return nil unless href
@@ -305,7 +305,7 @@ module XBRL
     end
 
     # Parse a single footnote element
-    #: (untyped) -> Models::Footnote?
+    #: (Ox::Element) -> Models::Footnote?
     def parse_footnote(footnote_node)
       id = footnote_node[:id]
       return nil unless id
@@ -324,7 +324,7 @@ module XBRL
     end
 
     # Parse dimensions from entity segment or scenario
-    #: (untyped, untyped) -> Hash[String, Models::Dimension]
+    #: (Ox::Element, Ox::Element) -> Hash[String, Models::Dimension]
     def parse_dimensions(entity, context_node)
       dimensions = {} #: Hash[String, Models::Dimension]
 
@@ -340,7 +340,7 @@ module XBRL
     end
 
     # Parse dimensions from a container element (segment or scenario)
-    #: (untyped) -> Hash[String, Models::Dimension]
+    #: (Ox::Element) -> Hash[String, Models::Dimension]
     def parse_dimension_container(container)
       dimensions = {} #: Hash[String, Models::Dimension]
 

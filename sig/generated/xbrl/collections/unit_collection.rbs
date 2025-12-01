@@ -3,7 +3,7 @@
 module XBRL
   module Collections
     # Collection of XBRL units with query methods
-    class UnitCollection < BaseCollection
+    class UnitCollection < BaseCollection[Models::Unit]
       # Find unit by ID
       # : (String) -> XBRL::Models::Unit?
       def find_by_id: (String) -> XBRL::Models::Unit?

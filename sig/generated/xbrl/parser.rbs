@@ -23,71 +23,71 @@ module XBRL
     def find_elements: (String) -> Array[Ox::Element]
 
     # Traverse XML tree depth-first
-    # : (untyped node) { (untyped) -> void } -> void
-    def traverse: (untyped node) { (untyped) -> void } -> void
+    # : (Ox::Element | String node) { (Ox::Element | String) -> void } -> void
+    def traverse: (Ox::Element | String node) { (Ox::Element | String) -> void } -> void
 
     # Get text content of first child element with given name
-    # : (untyped, String) -> String?
-    def get_element_text: (untyped, String) -> String?
+    # : (Ox::Element, String) -> String?
+    def get_element_text: (Ox::Element, String) -> String?
 
     # Get first child element with given name
-    # : (untyped, String) -> untyped
-    def get_element: (untyped, String) -> untyped
+    # : (Ox::Element, String) -> Ox::Element?
+    def get_element: (Ox::Element, String) -> Ox::Element?
 
     # Extract text content from element
-    # : (untyped) -> String
-    def extract_text: (untyped) -> String
+    # : (Ox::Element) -> String
+    def extract_text: (Ox::Element) -> String
 
     # Parse all context elements
     # : () -> Array[Models::Context]
     def parse_contexts: () -> Array[Models::Context]
 
     # Parse a single context element
-    # : (untyped) -> Models::Context?
-    def parse_context: (untyped) -> Models::Context?
+    # : (Ox::Element) -> Models::Context?
+    def parse_context: (Ox::Element) -> Models::Context?
 
     # Parse period element
-    # : (untyped) -> Hash[Symbol, untyped]?
-    def parse_period: (untyped) -> Hash[Symbol, untyped]?
+    # : (Ox::Element) -> { type: Symbol, start_date: String?, end_date: String?, instant_date: String? }?
+    def parse_period: (Ox::Element) -> { type: Symbol, start_date: String?, end_date: String?, instant_date: String? }?
 
     # Parse all unit elements
     # : () -> Array[Models::Unit]
     def parse_units: () -> Array[Models::Unit]
 
     # Parse a single unit element
-    # : (untyped) -> Models::Unit?
-    def parse_unit: (untyped) -> Models::Unit?
+    # : (Ox::Element) -> Models::Unit?
+    def parse_unit: (Ox::Element) -> Models::Unit?
 
     # Parse all fact elements
     # : () -> Array[Models::Fact]
     def parse_facts: () -> Array[Models::Fact]
 
     # Parse a single fact element
-    # : (untyped) -> Models::Fact?
-    def parse_fact: (untyped) -> Models::Fact?
+    # : (Ox::Element) -> Models::Fact?
+    def parse_fact: (Ox::Element) -> Models::Fact?
 
     # Parse all schema reference elements
     # : () -> Array[Models::SchemaRef]
     def parse_schema_refs: () -> Array[Models::SchemaRef]
 
     # Parse a single schema reference element
-    # : (untyped) -> Models::SchemaRef?
-    def parse_schema_ref: (untyped) -> Models::SchemaRef?
+    # : (Ox::Element) -> Models::SchemaRef?
+    def parse_schema_ref: (Ox::Element) -> Models::SchemaRef?
 
     # Parse all footnote elements
     # : () -> Array[Models::Footnote]
     def parse_footnotes: () -> Array[Models::Footnote]
 
     # Parse a single footnote element
-    # : (untyped) -> Models::Footnote?
-    def parse_footnote: (untyped) -> Models::Footnote?
+    # : (Ox::Element) -> Models::Footnote?
+    def parse_footnote: (Ox::Element) -> Models::Footnote?
 
     # Parse dimensions from entity segment or scenario
-    # : (untyped, untyped) -> Hash[String, Models::Dimension]
-    def parse_dimensions: (untyped, untyped) -> Hash[String, Models::Dimension]
+    # : (Ox::Element, Ox::Element) -> Hash[String, Models::Dimension]
+    def parse_dimensions: (Ox::Element, Ox::Element) -> Hash[String, Models::Dimension]
 
     # Parse dimensions from a container element (segment or scenario)
-    # : (untyped) -> Hash[String, Models::Dimension]
-    def parse_dimension_container: (untyped) -> Hash[String, Models::Dimension]
+    # : (Ox::Element) -> Hash[String, Models::Dimension]
+    def parse_dimension_container: (Ox::Element) -> Hash[String, Models::Dimension]
   end
 end

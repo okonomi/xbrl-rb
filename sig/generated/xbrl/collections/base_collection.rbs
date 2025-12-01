@@ -1,23 +1,20 @@
 # Generated from lib/xbrl/collections/base_collection.rb with RBS::Inline
+# NOTE: Manually edited to add generic type parameter [T]
 
 module XBRL
   module Collections
     # Base collection class providing Enumerable functionality
-    class BaseCollection
-      include Enumerable[untyped]
+    class BaseCollection[T]
+      include Enumerable[T]
 
-      # : Array[untyped]
-      attr_reader items: untyped
+      attr_reader items: Array[T]
 
-      # : (?Array[untyped] items) -> void
-      def initialize: (?Array[untyped] items) -> void
+      def initialize: (?Array[T] items) -> void
 
       # Iterate over items
-      # : () { (untyped) -> void } -> void
-      def each: () { (untyped) -> void } -> void
+      def each: () { (T) -> void } -> void
 
       # Get the number of items
-      # : () -> Integer
       def size: () -> Integer
 
       alias count size
@@ -25,20 +22,16 @@ module XBRL
       alias length size
 
       # Check if collection is empty
-      # : () -> bool
       def empty?: () -> bool
 
       # Get first item
-      # : () -> untyped
-      def first: () -> untyped
+      def first: () -> T?
 
       # Get last item
-      # : () -> untyped
-      def last: () -> untyped
+      def last: () -> T?
 
       # Convert to array
-      # : () -> Array[untyped]
-      def to_a: () -> Array[untyped]
+      def to_a: () -> Array[T]
     end
   end
 end
