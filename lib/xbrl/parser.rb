@@ -25,7 +25,9 @@ module XBRL
     end
 
     # Parse the XBRL document
+    # rubocop:disable Layout/LineLength
     #: () -> { contexts: Array[Models::Context], units: Array[Models::Unit], facts: Array[Models::Fact], schema_refs: Array[Models::SchemaRef], footnotes: Array[Models::Footnote] }
+    # rubocop:enable Layout/LineLength
     def parse
       {
         contexts: parse_contexts,
