@@ -1,5 +1,7 @@
 # xbrl-rb
 
+[![Ruby CI](https://github.com/okonomi/xbrl-rb/actions/workflows/main.yml/badge.svg)](https://github.com/okonomi/xbrl-rb/actions/workflows/main.yml)
+
 A Ruby gem for parsing XBRL (eXtensible Business Reporting Language) instance documents, with a focus on Japanese financial reporting formats (EDINET/TDnet).
 
 ## Features
@@ -222,9 +224,85 @@ This gem is currently in development (v0.4.0) and supports:
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### Setup
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```bash
+git clone https://github.com/okonomi/xbrl-rb.git
+cd xbrl-rb
+bundle install
+bundle exec rake dev:setup
+```
+
+### Running Tests
+
+```bash
+# Run all tests
+bundle exec rspec
+
+# Run specific test file
+bundle exec rspec spec/xbrl/parser_spec.rb
+
+# Run tests with documentation format
+bundle exec rspec --format documentation
+```
+
+### Code Quality
+
+This project uses several tools to ensure code quality:
+
+```bash
+# Run all checks (tests, rubocop, steep)
+bundle exec rake check
+
+# Individual checks
+bundle exec rspec          # Run tests
+bundle exec rubocop        # Check code style
+bundle exec steep check    # Check types
+```
+
+### Type Checking
+
+This project uses [Steep](https://github.com/soutaro/steep) for static type checking with RBS.
+
+```bash
+# Check types
+bundle exec steep check
+
+# Generate RBS files from inline annotations
+bundle exec rake rbs:generate
+
+# Check if RBS files are up to date
+bundle exec rake rbs:check
+```
+
+Type signatures are written inline using [rbs-inline](https://github.com/soutaro/rbs-inline) annotations:
+
+```ruby
+#: (String) -> void
+def example_method(arg)
+  # ...
+end
+```
+
+### Development Workflow
+
+1. Create a feature branch
+2. Make your changes
+3. Add tests for new functionality
+4. Ensure all checks pass: `bundle exec rake check`
+5. Commit your changes
+6. Push and create a pull request
+
+### Releasing
+
+To release a new version:
+
+1. Update the version number in `lib/xbrl/version.rb`
+2. Update CHANGELOG.md
+3. Run `bundle exec rake check` to ensure all tests pass
+4. Commit the changes
+5. Create and push a git tag: `git tag v0.x.x && git push origin v0.x.x`
+6. GitHub Actions will automatically build and publish the gem to RubyGems
 
 ## Contributing
 
